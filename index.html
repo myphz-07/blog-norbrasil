@@ -1,0 +1,2392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Blog Norbrasil — Saneamento, infraestrutura e desenvolvimento urbano. Conteúdo estratégico sobre a cidade, a população e o futuro.">
+<title>Blog Norbrasil — Infraestrutura que transforma cidades</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --nb-navy: #071B3E;
+    --nb-blue: #0A2558;
+    --nb-mid: #103472;
+    --nb-accent: #0E6FD8;
+    --nb-sky: #60B8F5;
+    --nb-white: #FFFFFF;
+    --nb-off: #F4F7FC;
+    --nb-surface: #EBF1FA;
+    --nb-gray: #8A9BB5;
+    --nb-text: #0D1B34;
+    --nb-muted: #4A5D78;
+    --nb-border: rgba(14,111,216,0.15);
+    --nb-gradient: linear-gradient(135deg, #071B3E 0%, #0E3A7D 60%, #1055A8 100%);
+    --nb-card-shadow: 0 2px 20px rgba(7,27,62,0.08);
+    --nb-card-shadow-hover: 0 8px 40px rgba(7,27,62,0.16);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--nb-white);
+    color: var(--nb-text);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  .syne { font-family: 'Syne', sans-serif; }
+
+  .hidden { display: none !important; }
+
+  /* ── READING BAR ─────────────────────────────── */
+  .reading-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--nb-sky); width: 0%; z-index: 300;
+    transition: width 0.1s;
+  }
+
+  /* ── NAVIGATION ──────────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7,27,62,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(45,156,219,0.2);
+  }
+
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 2rem; height: 68px;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 2rem;
+  }
+
+  .nav-logo {
+    display: flex; align-items: center;
+    gap: 12px; text-decoration: none; cursor: pointer;
+  }
+
+  /* Logo image area — swap src when logo is available */
+  .logo-img-wrap {
+    width: 38px; height: 38px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .logo-img-wrap img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; display: block;
+  }
+
+  /* Fallback mark when no img */
+  .logo-mark {
+    width: 38px; height: 38px;
+    background: var(--nb-accent); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg { width: 22px; height: 22px; fill: white; }
+
+  .logo-text {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 18px; color: white; letter-spacing: -0.3px; line-height: 1.2;
+  }
+
+  .logo-text span {
+    display: block; font-size: 10px; font-weight: 400;
+    color: var(--nb-sky); letter-spacing: 1.5px;
+    text-transform: uppercase; font-family: 'DM Sans', sans-serif;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 13.5px; font-weight: 400;
+    padding: 6px 14px; border-radius: 6px;
+    transition: all 0.2s; white-space: nowrap; cursor: pointer;
+  }
+
+  .nav-links a:hover { color: white; background: rgba(255,255,255,0.08); }
+  .nav-links a.active { color: var(--nb-sky); background: rgba(96,184,245,0.1); }
+
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+
+  .nav-search {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; padding: 7px 14px;
+    color: rgba(255,255,255,0.6); font-size: 13px;
+    cursor: pointer; transition: all 0.2s; min-width: 160px;
+  }
+
+  .nav-search:hover { background: rgba(255,255,255,0.11); color: rgba(255,255,255,0.85); }
+  .nav-search svg { width: 14px; height: 14px; opacity: 0.7; }
+
+  /* ── HERO ────────────────────────────────────── */
+  .hero {
+    background: var(--nb-gradient); position: relative;
+    overflow: hidden; padding: 90px 0 80px;
+  }
+
+  .hero::before {
+    content: ''; position: absolute; top: -100px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(14,111,216,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: ''; position: absolute; bottom: -80px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(45,156,219,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none;
+  }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+
+  .hero-content {
+    display: grid; grid-template-columns: 1fr 420px;
+    gap: 4rem; align-items: center; position: relative; z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(14,111,216,0.3);
+    border: 1px solid rgba(96,184,245,0.3);
+    border-radius: 50px; padding: 5px 14px;
+    font-size: 12px; font-weight: 500; color: var(--nb-sky);
+    letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 20px;
+  }
+
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--nb-sky); border-radius: 50%;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800; color: white;
+    line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px;
+  }
+
+  .hero-title em { font-style: normal; color: var(--nb-sky); }
+
+  .hero-desc {
+    color: rgba(255,255,255,0.72); font-size: 17px;
+    line-height: 1.7; margin-bottom: 32px; max-width: 540px;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: white; color: var(--nb-blue);
+    border: none; border-radius: 10px; padding: 13px 26px;
+    font-size: 14.5px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif; text-decoration: none;
+  }
+
+  .btn-primary:hover { background: var(--nb-off); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+  .btn-ghost {
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; padding: 13px 26px;
+    font-size: 14.5px; font-weight: 500; cursor: pointer;
+    transition: all 0.2s; background: transparent;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'DM Sans', sans-serif; text-decoration: none;
+  }
+
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); color: white; }
+
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 44px;
+    padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .hero-stat-num {
+    font-family: 'Syne', sans-serif; font-size: 26px;
+    font-weight: 700; color: white; line-height: 1;
+  }
+
+  .hero-stat-label { font-size: 12.5px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+  .hero-featured-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; overflow: hidden;
+    backdrop-filter: blur(8px); transition: all 0.3s;
+    cursor: pointer; text-decoration: none; display: block;
+  }
+
+  .hero-featured-card:hover {
+    border-color: rgba(96,184,245,0.35); transform: translateY(-4px);
+    background: rgba(255,255,255,0.1);
+  }
+
+  .hero-card-img {
+    height: 220px;
+    background: linear-gradient(135deg, #0E3A7D 0%, #1A6BAF 100%);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .hero-card-img-svg { opacity: 0.35; }
+
+  .hero-card-badge {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--nb-accent); color: white;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 12px; border-radius: 50px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  .hero-card-body { padding: 22px; }
+
+  .hero-card-meta {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px;
+  }
+
+  .hero-card-title {
+    font-family: 'Syne', sans-serif; font-size: 18px;
+    font-weight: 700; color: white; line-height: 1.3; margin-bottom: 12px;
+  }
+
+  .hero-card-excerpt { font-size: 13.5px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 18px; }
+
+  .hero-card-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--nb-sky); font-size: 13px; font-weight: 500;
+  }
+
+  .hero-card-link svg { width: 14px; height: 14px; }
+
+  /* ── CATEGORIES BAR ──────────────────────────── */
+  .categories-bar {
+    background: var(--nb-navy);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    overflow-x: auto;
+  }
+
+  .categories-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 2rem; display: flex; align-items: stretch; gap: 0;
+  }
+
+  .cat-pill {
+    display: flex; align-items: center; gap: 7px;
+    padding: 14px 20px; font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.5); cursor: pointer;
+    transition: all 0.2s; border-bottom: 2px solid transparent;
+    white-space: nowrap; text-decoration: none; user-select: none;
+  }
+
+  .cat-pill:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.04); }
+
+  .cat-pill.active {
+    color: var(--nb-sky); border-bottom-color: var(--nb-sky);
+    background: rgba(96,184,245,0.05);
+  }
+
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── MAIN ────────────────────────────────────── */
+  .main-wrapper { background: var(--nb-off); min-height: 600px; }
+
+  .content-grid {
+    max-width: 1280px; margin: 0 auto;
+    padding: 64px 2rem;
+    display: grid; grid-template-columns: 1fr 340px;
+    gap: 48px; align-items: start;
+  }
+
+  /* ── SECTION HEADERS ─────────────────────────── */
+  .section-header {
+    display: flex; align-items: baseline;
+    justify-content: space-between; margin-bottom: 28px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: 22px;
+    font-weight: 700; color: var(--nb-text); letter-spacing: -0.4px;
+  }
+
+  .section-title span { color: var(--nb-accent); }
+
+  .section-link {
+    font-size: 13px; color: var(--nb-accent); text-decoration: none;
+    font-weight: 500; display: flex; align-items: center; gap: 4px;
+    transition: gap 0.2s; cursor: pointer;
+  }
+
+  .section-link:hover { gap: 8px; }
+
+  /* ── ARTICLE CARDS ───────────────────────────── */
+  .articles-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; margin-bottom: 48px;
+  }
+
+  .article-card {
+    background: white; border-radius: var(--radius);
+    overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.25s; cursor: pointer;
+    text-decoration: none; display: flex;
+    flex-direction: column; box-shadow: var(--nb-card-shadow);
+  }
+
+  .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--nb-card-shadow-hover);
+    border-color: rgba(14,111,216,0.12);
+  }
+
+  .article-card.featured { grid-column: span 2; flex-direction: row; }
+
+  .card-img {
+    height: 180px; background: var(--nb-gradient);
+    position: relative; overflow: hidden;
+    flex-shrink: 0; display: flex;
+    align-items: center; justify-content: center;
+  }
+
+  .article-card.featured .card-img { width: 340px; height: auto; min-height: 260px; }
+
+  .card-img-inner { position: absolute; inset: 0; opacity: 0.2; }
+
+  .card-category {
+    position: absolute; top: 12px; left: 12px;
+    font-size: 10.5px; font-weight: 600;
+    padding: 4px 10px; border-radius: 50px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  .cat-saneamento { background: rgba(14,111,216,0.9); color: white; }
+  .cat-infra { background: rgba(7,27,62,0.9); color: #60B8F5; }
+  .cat-meio { background: rgba(22,120,70,0.9); color: #86EFAC; }
+  .cat-inov { background: rgba(100,60,200,0.9); color: #C4B5FD; }
+  .cat-social { background: rgba(180,60,30,0.9); color: #FCA5A5; }
+  .cat-sust { background: rgba(15,100,80,0.9); color: #6EE7B7; }
+  .cat-obras { background: rgba(60,60,80,0.9); color: #C0C8E0; }
+
+  .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+
+  .card-meta {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 12px; color: var(--nb-gray); margin-bottom: 10px;
+  }
+
+  .card-meta-sep { color: var(--nb-border); }
+
+  .card-title {
+    font-family: 'Syne', sans-serif; font-size: 16px;
+    font-weight: 700; color: var(--nb-text);
+    line-height: 1.3; margin-bottom: 10px;
+    letter-spacing: -0.2px; flex: 1;
+  }
+
+  .article-card.featured .card-title {
+    font-size: 22px; letter-spacing: -0.5px; line-height: 1.25;
+  }
+
+  .card-excerpt {
+    font-size: 13.5px; color: var(--nb-muted); line-height: 1.6;
+    margin-bottom: 16px; display: -webkit-box;
+    -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .card-footer {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding-top: 14px; border-top: 1px solid rgba(0,0,0,0.05); margin-top: auto;
+  }
+
+  .author-chip { display: flex; align-items: center; gap: 8px; }
+
+  .author-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--nb-accent); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+
+  .author-name { font-size: 12.5px; font-weight: 500; color: var(--nb-muted); }
+
+  .read-more {
+    font-size: 12.5px; color: var(--nb-accent);
+    font-weight: 500; display: flex; align-items: center; gap: 4px;
+  }
+
+  /* ── ARTICLE LIST ────────────────────────────── */
+  .articles-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+
+  .article-list-item {
+    background: white; border-radius: var(--radius-sm);
+    border: 1px solid rgba(0,0,0,0.05);
+    display: flex; gap: 0; overflow: hidden;
+    transition: all 0.2s; cursor: pointer;
+    box-shadow: 0 1px 8px rgba(7,27,62,0.05);
+  }
+
+  .article-list-item:hover {
+    border-color: rgba(14,111,216,0.15);
+    box-shadow: 0 4px 20px rgba(7,27,62,0.1);
+    transform: translateX(3px);
+  }
+
+  .list-item-num {
+    width: 48px; background: var(--nb-off);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 20px;
+    font-weight: 800; color: rgba(14,111,216,0.25); flex-shrink: 0;
+  }
+
+  .list-item-body { padding: 14px 16px; flex: 1; }
+
+  .list-item-cat {
+    font-size: 10.5px; font-weight: 600; color: var(--nb-accent);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;
+  }
+
+  .list-item-title {
+    font-family: 'Syne', sans-serif; font-size: 14px;
+    font-weight: 700; color: var(--nb-text); line-height: 1.35; margin-bottom: 6px;
+  }
+
+  .list-item-meta { font-size: 12px; color: var(--nb-gray); display: flex; gap: 10px; }
+
+  /* ── SIDEBAR ─────────────────────────────────── */
+  .sidebar { display: flex; flex-direction: column; gap: 28px; }
+
+  .sidebar-widget {
+    background: white; border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.05);
+    overflow: hidden; box-shadow: var(--nb-card-shadow);
+  }
+
+  .widget-header {
+    padding: 18px 20px; border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: var(--nb-off);
+  }
+
+  .widget-title {
+    font-family: 'Syne', sans-serif; font-size: 14px;
+    font-weight: 700; color: var(--nb-text); letter-spacing: -0.2px;
+  }
+
+  .widget-body { padding: 18px 20px; }
+
+  .cat-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+
+  .cat-list li a {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 9px 0; border-bottom: 1px solid rgba(0,0,0,0.04);
+    text-decoration: none; color: var(--nb-muted);
+    font-size: 13.5px; transition: all 0.2s; cursor: pointer;
+  }
+
+  .cat-list li:last-child a { border-bottom: none; }
+  .cat-list li a:hover { color: var(--nb-accent); padding-left: 6px; }
+
+  .cat-list li a span {
+    background: var(--nb-surface); color: var(--nb-accent);
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 50px;
+  }
+
+  .cat-list-label { display: flex; align-items: center; gap: 8px; }
+  .cat-list-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .popular-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+
+  .popular-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    cursor: pointer; transition: all 0.2s;
+  }
+
+  .popular-item:hover .popular-num { color: var(--nb-accent); }
+  .popular-item:hover .popular-title { color: var(--nb-accent); }
+
+  .popular-num {
+    font-family: 'Syne', sans-serif; font-size: 24px;
+    font-weight: 800; color: rgba(14,111,216,0.2);
+    line-height: 1; flex-shrink: 0; transition: all 0.2s; min-width: 24px;
+  }
+
+  .popular-title {
+    font-size: 13.5px; font-weight: 600; color: var(--nb-text);
+    line-height: 1.4; margin-bottom: 4px; transition: color 0.2s;
+  }
+
+  .popular-meta { font-size: 12px; color: var(--nb-gray); display: flex; gap: 8px; }
+
+  .tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .tag-pill {
+    background: var(--nb-off); border: 1px solid rgba(0,0,0,0.07);
+    color: var(--nb-muted); font-size: 12px;
+    padding: 5px 12px; border-radius: 50px;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+  }
+
+  .tag-pill:hover {
+    background: var(--nb-surface);
+    border-color: rgba(14,111,216,0.2); color: var(--nb-accent);
+  }
+
+  /* ── ABOUT BANNER ────────────────────────────── */
+  .about-banner {
+    background: var(--nb-gradient);
+    padding: 72px 0; position: relative; overflow: hidden;
+  }
+
+  .about-banner::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--nb-sky), var(--nb-accent), transparent);
+  }
+
+  .banner-grid {
+    max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 4rem; align-items: center;
+  }
+
+  .banner-eyebrow {
+    font-size: 11px; font-weight: 600; color: var(--nb-sky);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px;
+  }
+
+  .banner-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px,3vw,38px);
+    font-weight: 800; color: white; line-height: 1.15;
+    letter-spacing: -0.8px; margin-bottom: 16px;
+  }
+
+  .banner-title em { font-style: normal; color: var(--nb-sky); }
+
+  .banner-text {
+    font-size: 16px; color: rgba(255,255,255,0.68);
+    line-height: 1.7; max-width: 560px; margin-bottom: 28px;
+  }
+
+  .banner-numbers { display: flex; gap: 40px; }
+
+  .banner-num-value {
+    font-family: 'Syne', sans-serif; font-size: 32px;
+    font-weight: 800; color: white; line-height: 1; margin-bottom: 4px;
+  }
+
+  .banner-num-label { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+  .banner-cta-side {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 16px; text-align: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 32px 28px; min-width: 240px;
+  }
+
+  .banner-cta-icon {
+    width: 56px; height: 56px;
+    background: rgba(14,111,216,0.3); border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .banner-cta-icon svg { width: 28px; height: 28px; fill: var(--nb-sky); }
+  .banner-cta-text { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: white; line-height: 1.3; }
+  .banner-cta-sub { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+  /* ── SOCIAL STRIP ────────────────────────────── */
+  .social-strip { background: var(--nb-navy); padding: 32px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+
+  .social-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 2rem;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+  }
+
+  .social-text { font-size: 15px; color: rgba(255,255,255,0.65); }
+  .social-text strong { color: white; }
+
+  .social-icons { display: flex; gap: 12px; }
+
+  .social-btn {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.2s; cursor: pointer; text-decoration: none;
+  }
+
+  .social-btn:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+  .social-btn svg { width: 20px; height: 20px; fill: rgba(255,255,255,0.7); }
+
+  /* ── FOOTER ──────────────────────────────────── */
+  footer { background: var(--nb-navy); border-top: 1px solid rgba(255,255,255,0.05); padding: 56px 0 0; }
+
+  .footer-grid {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 2rem 48px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  }
+
+  .footer-brand-text {
+    font-size: 14px; color: rgba(255,255,255,0.45);
+    line-height: 1.7; margin-top: 14px; margin-bottom: 20px; max-width: 280px;
+  }
+
+  .footer-col-title {
+    font-family: 'Syne', sans-serif; font-size: 13px;
+    font-weight: 700; color: rgba(255,255,255,0.9);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 18px;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.45); text-decoration: none;
+    font-size: 13.5px; transition: color 0.2s; cursor: pointer;
+  }
+
+  .footer-links a:hover { color: rgba(255,255,255,0.85); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 20px 2rem; max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  }
+
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.3); }
+  .footer-copy span { color: var(--nb-sky); }
+
+  .footer-legal { display: flex; gap: 20px; }
+
+  .footer-legal a {
+    font-size: 12.5px; color: rgba(255,255,255,0.3);
+    text-decoration: none; transition: color 0.2s; cursor: pointer;
+  }
+
+  .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+  /* ── ARTICLE PAGE ────────────────────────────── */
+  #page-article { display: none; }
+
+  .article-page-hero {
+    background: var(--nb-gradient);
+    padding: 60px 0 50px; position: relative; overflow: hidden;
+  }
+
+  .article-page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .article-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.6); font-size: 13.5px;
+    cursor: pointer; margin-bottom: 28px;
+    transition: color 0.2s; text-decoration: none;
+    position: relative; z-index: 2;
+  }
+
+  .article-back:hover { color: white; }
+
+  .article-header { position: relative; z-index: 2; max-width: 820px; }
+
+  .article-cat-badge {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 5px 14px; border-radius: 50px;
+    letter-spacing: 0.8px; text-transform: uppercase;
+    margin-bottom: 18px; background: var(--nb-accent); color: white;
+  }
+
+  .article-page-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 3.5vw, 44px);
+    font-weight: 800; color: white;
+    line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 20px;
+  }
+
+  .article-page-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 13px; color: rgba(255,255,255,0.5); flex-wrap: wrap;
+  }
+
+  .article-page-meta span { display: flex; align-items: center; gap: 6px; }
+
+  .article-body-wrap {
+    max-width: 1280px; margin: 0 auto; padding: 56px 2rem;
+    display: grid; grid-template-columns: 1fr 300px; gap: 60px;
+  }
+
+  .article-content { max-width: 760px; }
+
+  .article-lead {
+    font-size: 19px; color: var(--nb-muted); line-height: 1.75;
+    font-weight: 400; margin-bottom: 36px;
+    padding-bottom: 32px; border-bottom: 2px solid var(--nb-surface);
+  }
+
+  .article-body h2 {
+    font-family: 'Syne', sans-serif; font-size: 24px;
+    font-weight: 700; color: var(--nb-text);
+    margin: 36px 0 16px; letter-spacing: -0.4px;
+  }
+
+  .article-body h3 {
+    font-family: 'Syne', sans-serif; font-size: 18px;
+    font-weight: 700; color: var(--nb-text); margin: 28px 0 12px;
+  }
+
+  .article-body p {
+    font-size: 16.5px; color: var(--nb-muted);
+    line-height: 1.8; margin-bottom: 20px;
+  }
+
+  .article-body ul {
+    margin: 16px 0 24px 0; padding-left: 0; list-style: none;
+  }
+
+  .article-body ul li {
+    font-size: 16px; color: var(--nb-muted); line-height: 1.7;
+    padding: 8px 0 8px 28px; position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .article-body ul li::before {
+    content: ''; position: absolute; left: 8px; top: 18px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--nb-accent);
+  }
+
+  .article-quote {
+    background: var(--nb-surface);
+    border-left: 4px solid var(--nb-accent);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px; margin: 28px 0;
+    font-size: 17px; font-style: italic;
+    color: var(--nb-blue); line-height: 1.7;
+    font-weight: 500;
+  }
+
+  .article-highlight {
+    background: var(--nb-gradient); border-radius: 16px;
+    padding: 28px 32px; margin: 32px 0;
+    color: white;
+  }
+
+  .article-highlight-title {
+    font-family: 'Syne', sans-serif; font-size: 18px;
+    font-weight: 700; margin-bottom: 10px; color: var(--nb-sky);
+  }
+
+  .article-highlight p {
+    color: rgba(255,255,255,0.78); font-size: 15px;
+    line-height: 1.7; margin-bottom: 0;
+  }
+
+  .article-cta {
+    background: var(--nb-off); border: 1px solid rgba(14,111,216,0.15);
+    border-radius: 16px; padding: 28px; margin-top: 40px; text-align: center;
+  }
+
+  .article-cta-title {
+    font-family: 'Syne', sans-serif; font-size: 20px;
+    font-weight: 700; color: var(--nb-text); margin-bottom: 10px;
+  }
+
+  .article-cta p { font-size: 14.5px; color: var(--nb-muted); margin-bottom: 18px; }
+
+  .btn-accent {
+    background: var(--nb-accent); color: white; border: none;
+    border-radius: 10px; padding: 12px 24px; font-size: 14px;
+    font-weight: 600; cursor: pointer; transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-accent:hover { background: #1278E8; transform: translateY(-1px); }
+
+  .article-sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+  .related-card {
+    background: white; border-radius: var(--radius-sm);
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 16px; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 1px 8px rgba(7,27,62,0.05);
+  }
+
+  .related-card:hover { border-color: rgba(14,111,216,0.2); transform: translateY(-2px); }
+
+  .related-cat {
+    font-size: 10.5px; font-weight: 600; color: var(--nb-accent);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
+  }
+
+  .related-title {
+    font-family: 'Syne', sans-serif; font-size: 13.5px;
+    font-weight: 700; color: var(--nb-text);
+    line-height: 1.4; margin-bottom: 8px;
+  }
+
+  .related-meta { font-size: 12px; color: var(--nb-gray); }
+
+  /* ── ABOUT PAGE ──────────────────────────────── */
+  #page-about { display: none; }
+
+  .about-page-hero {
+    background: var(--nb-gradient); padding: 80px 0; position: relative; overflow: hidden;
+  }
+
+  .about-page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .about-body { max-width: 1000px; margin: 0 auto; padding: 64px 2rem; }
+
+  .about-section { margin-bottom: 56px; }
+
+  .about-section-title {
+    font-family: 'Syne', sans-serif; font-size: 26px;
+    font-weight: 800; color: var(--nb-text);
+    letter-spacing: -0.5px; margin-bottom: 6px;
+  }
+
+  .about-section-subtitle {
+    font-size: 15px; color: var(--nb-accent);
+    font-weight: 500; margin-bottom: 24px;
+  }
+
+  .about-section p {
+    font-size: 16.5px; color: var(--nb-muted);
+    line-height: 1.8; margin-bottom: 18px;
+  }
+
+  .about-divider {
+    height: 1px; background: linear-gradient(90deg, var(--nb-accent), transparent);
+    margin-bottom: 48px; opacity: 0.3;
+  }
+
+  .about-services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+
+  .about-service-card {
+    background: var(--nb-off); border-radius: var(--radius);
+    border: 1px solid rgba(14,111,216,0.1);
+    padding: 20px; transition: all 0.2s;
+  }
+
+  .about-service-card:hover { border-color: rgba(14,111,216,0.25); background: var(--nb-surface); }
+
+  .about-service-icon {
+    width: 40px; height: 40px; background: var(--nb-accent);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .about-service-icon svg { width: 20px; height: 20px; fill: white; }
+
+  .about-service-name {
+    font-family: 'Syne', sans-serif; font-size: 14px;
+    font-weight: 700; color: var(--nb-text); margin-bottom: 6px;
+  }
+
+  .about-service-desc { font-size: 13px; color: var(--nb-muted); line-height: 1.6; }
+
+  .about-numbers {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px;
+  }
+
+  .about-num-card {
+    background: var(--nb-gradient); border-radius: var(--radius);
+    padding: 24px; text-align: center;
+  }
+
+  .about-num-value {
+    font-family: 'Syne', sans-serif; font-size: 34px;
+    font-weight: 800; color: white; line-height: 1; margin-bottom: 8px;
+  }
+
+  .about-num-label { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+  .about-highlight-box {
+    background: var(--nb-navy); border-radius: var(--radius-lg);
+    padding: 36px; margin: 32px 0; position: relative; overflow: hidden;
+  }
+
+  .about-highlight-box::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(14,111,216,0.3), transparent);
+  }
+
+  .about-highlight-box-title {
+    font-family: 'Syne', sans-serif; font-size: 20px;
+    font-weight: 700; color: var(--nb-sky); margin-bottom: 12px;
+    position: relative;
+  }
+
+  .about-highlight-box p {
+    font-size: 15px; color: rgba(255,255,255,0.7);
+    line-height: 1.75; position: relative; margin-bottom: 0;
+  }
+
+  /* ── CATEGORY PAGE ───────────────────────────── */
+  #page-category { display: none; }
+
+  .cat-page-header {
+    background: var(--nb-gradient);
+    padding: 56px 0; position: relative; overflow: hidden;
+  }
+
+  .cat-page-header::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .cat-page-title {
+    font-family: 'Syne', sans-serif; font-size: 36px;
+    font-weight: 800; color: white; letter-spacing: -0.6px;
+    margin-bottom: 8px; position: relative; z-index: 2;
+  }
+
+  .cat-page-desc { font-size: 16px; color: rgba(255,255,255,0.65); position: relative; z-index: 2; }
+
+  .cat-page-body {
+    max-width: 1280px; margin: 0 auto; padding: 56px 2rem;
+  }
+
+  .cat-articles-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+
+  /* ── EMPTY STATE ─────────────────────────────── */
+  .empty-state {
+    text-align: center; padding: 80px 20px;
+  }
+
+  .empty-state-icon {
+    font-size: 48px; margin-bottom: 20px; opacity: 0.4;
+  }
+
+  .empty-state-title {
+    font-family: 'Syne', sans-serif; font-size: 22px;
+    font-weight: 700; color: var(--nb-text); margin-bottom: 10px;
+  }
+
+  .empty-state-text { font-size: 15px; color: var(--nb-muted); }
+
+  /* ── ANIMATIONS ──────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+  /* ── SCROLLBAR ───────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--nb-off); }
+  ::-webkit-scrollbar-thumb { background: rgba(14,111,216,0.3); border-radius: 3px; }
+
+  /* ── RESPONSIVE ──────────────────────────────── */
+  @media (max-width: 1024px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-featured-card { display: none; }
+    .content-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .banner-grid { grid-template-columns: 1fr; }
+    .banner-cta-side { display: none; }
+    .article-body-wrap { grid-template-columns: 1fr; }
+    .about-services-grid { grid-template-columns: 1fr 1fr; }
+    .about-numbers { grid-template-columns: 1fr 1fr; }
+    .cat-articles-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-card.featured { flex-direction: column; }
+    .article-card.featured .card-img { width: 100%; min-height: 200px; }
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .about-services-grid { grid-template-columns: 1fr; }
+    .about-numbers { grid-template-columns: 1fr 1fr; }
+    .cat-articles-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 20px; }
+  }
+
+  /* ── SEARCH OVERLAY ──────────────────────────── */
+  .search-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(5,15,35,0.85);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: flex-start;
+    justify-content: center; padding-top: 80px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .search-overlay.open { opacity: 1; pointer-events: all; }
+
+  .search-box {
+    width: 100%; max-width: 680px; margin: 0 1.5rem;
+    background: #0D2250;
+    border: 1px solid rgba(96,184,245,0.25);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    transform: translateY(-12px);
+    transition: transform 0.22s ease;
+  }
+  .search-overlay.open .search-box { transform: translateY(0); }
+
+  .search-input-wrap {
+    display: flex; align-items: center;
+    gap: 12px; padding: 18px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .search-input-wrap svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--nb-sky); }
+
+  #searchInput {
+    flex: 1; background: transparent; border: none; outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px; color: white; caret-color: var(--nb-sky);
+  }
+  #searchInput::placeholder { color: rgba(255,255,255,0.3); }
+
+  .search-close-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+    color: rgba(255,255,255,0.5);
+  }
+  .search-close-btn:hover { background: rgba(255,255,255,0.14); color: white; }
+  .search-close-btn svg { width: 14px; height: 14px; }
+
+  .search-meta {
+    display: flex; align-items: center;
+    justify-content: space-between; padding: 10px 22px 8px;
+  }
+  .search-count { font-size: 12px; color: rgba(255,255,255,0.35); }
+  .search-hint { font-size: 11.5px; color: rgba(255,255,255,0.22); }
+
+  .search-results { max-height: 420px; overflow-y: auto; padding: 0 10px 12px; }
+  .search-results::-webkit-scrollbar { width: 4px; }
+  .search-results::-webkit-scrollbar-thumb { background: rgba(96,184,245,0.25); border-radius: 2px; }
+
+  .search-group-label {
+    font-size: 10.5px; font-weight: 700; color: rgba(255,255,255,0.25);
+    text-transform: uppercase; letter-spacing: 1.2px;
+    padding: 12px 12px 6px;
+  }
+
+  .search-result-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 11px 12px; border-radius: 12px;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .search-result-item:hover, .search-result-item.active { background: rgba(14,111,216,0.22); }
+
+  .search-result-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 16px;
+  }
+
+  .search-result-body { flex: 1; min-width: 0; }
+
+  .search-result-title {
+    font-family: 'Syne', sans-serif; font-size: 14px;
+    font-weight: 700; color: white; line-height: 1.35; margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .search-result-title mark { background: transparent; color: var(--nb-sky); font-weight: 800; }
+
+  .search-result-meta { font-size: 12px; color: rgba(255,255,255,0.38); display: flex; align-items: center; gap: 8px; }
+
+  .search-result-cat {
+    font-size: 10px; font-weight: 600; color: var(--nb-sky);
+    background: rgba(14,111,216,0.22); padding: 2px 8px;
+    border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  .search-result-arrow { color: rgba(255,255,255,0.18); flex-shrink: 0; transition: color 0.15s; }
+  .search-result-item:hover .search-result-arrow { color: var(--nb-sky); }
+
+  .search-no-results { text-align: center; padding: 36px 20px; color: rgba(255,255,255,0.35); font-size: 14px; }
+  .search-no-results strong { color: rgba(255,255,255,0.6); display: block; margin-bottom: 6px; font-size: 16px; }
+
+  .search-cat-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 12px 4px; }
+
+  .search-cat-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px; padding: 6px 14px;
+    font-size: 12.5px; color: rgba(255,255,255,0.65);
+    cursor: pointer; transition: all 0.18s;
+  }
+  .search-cat-chip:hover { background: rgba(14,111,216,0.3); border-color: rgba(96,184,245,0.35); color: white; }
+  .search-cat-chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  @media (max-width: 600px) {
+    .search-overlay { padding-top: 40px; }
+    .search-box { margin: 0 1rem; }
+    #searchInput { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reading-bar" id="readingBar"></div>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">
+      <!-- Logo Norbrasil — substitua o src abaixo pela imagem real quando disponível -->
+      <div class="logo-mark" id="logoMark">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8c0 4 4 8 7 12 3-4 7-8 7-12 0-3-3-6-7-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+      </div>
+      <div class="logo-text">
+        Norbrasil
+        <span>Blog Institucional</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a id="nav-home" class="active" onclick="showPage('home')">Início</a></li>
+      <li><a id="nav-saneamento" onclick="showCategory('Saneamento')">Saneamento</a></li>
+      <li><a id="nav-infra" onclick="showCategory('Infraestrutura')">Infraestrutura</a></li>
+      <li><a id="nav-sust" onclick="showCategory('Sustentabilidade')">Sustentabilidade</a></li>
+      <li><a id="nav-inov" onclick="showCategory('Inovação Urbana')">Inovação</a></li>
+      <li><a id="nav-about" onclick="showPage('about')">Sobre a Empresa</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-search" id="searchTrigger" onclick="openSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        Buscar artigos...
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ SEARCH OVERLAY ════════════════════════════════════════ -->
+<div class="search-overlay" id="searchOverlay" onclick="handleOverlayClick(event)">
+  <div class="search-box" id="searchBox">
+
+    <div class="search-input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Buscar artigos, temas, categorias..." autocomplete="off" oninput="runSearch(this.value)" onkeydown="handleSearchKey(event)">
+      <div class="search-close-btn" onclick="closeSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="search-meta">
+      <span class="search-count" id="searchCount">Todos os artigos</span>
+      <span class="search-hint">↑↓ navegar &nbsp;·&nbsp; Enter abrir &nbsp;·&nbsp; Esc fechar</span>
+    </div>
+
+    <div class="search-results" id="searchResults"></div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PAGE: HOME                                            -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid-lines"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div>
+          <div class="hero-eyebrow fade-up">Infraestrutura que transforma</div>
+          <h1 class="hero-title fade-up delay-1">
+            A cidade funciona.<br>
+            <em>A Norbrasil</em> está<br>
+            por trás disso.
+          </h1>
+          <p class="hero-desc fade-up delay-2">
+            Conteúdo estratégico sobre saneamento, desenvolvimento urbano,
+            sustentabilidade e o impacto real do trabalho que transforma a vida
+            das pessoas — todos os dias, em cada bairro.
+          </p>
+          <div class="hero-actions fade-up delay-3">
+            <span class="btn-primary" onclick="document.getElementById('artigos').scrollIntoView({behavior:'smooth'})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+              Explorar Artigos
+            </span>
+            <span class="btn-ghost" onclick="showPage('about')">
+              Sobre a Norbrasil
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="hero-stats fade-up delay-4">
+            <div>
+              <div class="hero-stat-num">+50</div>
+              <div class="hero-stat-label">Anos de operação</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">11</div>
+              <div class="hero-stat-label">Artigos publicados</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">8</div>
+              <div class="hero-stat-label">Categorias de conteúdo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Card -->
+        <div class="hero-featured-card fade-up delay-2" onclick="openArticle(0)">
+          <div class="hero-card-img">
+            <svg class="hero-card-img-svg" width="280" height="180" viewBox="0 0 280 180">
+              <rect x="20" y="80" width="30" height="100" fill="white" opacity="0.5" rx="2"/>
+              <rect x="60" y="50" width="30" height="130" fill="white" opacity="0.7" rx="2"/>
+              <rect x="100" y="65" width="30" height="115" fill="white" opacity="0.6" rx="2"/>
+              <rect x="140" y="30" width="30" height="150" fill="white" rx="2"/>
+              <rect x="180" y="55" width="30" height="125" fill="white" opacity="0.8" rx="2"/>
+              <rect x="220" y="45" width="30" height="135" fill="white" opacity="0.9" rx="2"/>
+            </svg>
+            <span class="hero-card-badge">Em Destaque</span>
+          </div>
+          <div class="hero-card-body">
+            <div class="hero-card-meta">
+              <span>19 de Janeiro, 2026</span>
+              <span>•</span>
+              <span>8 min de leitura</span>
+            </div>
+            <div class="hero-card-title">
+              O trabalho invisível que mantém a cidade funcionando todos os dias
+            </div>
+            <div class="hero-card-excerpt">
+              Por trás de cada torneira aberta e cada rua que drena a chuva, existe uma equipe trabalhando 24 horas para que tudo funcione.
+            </div>
+            <div class="hero-card-link">
+              Ler artigo completo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES BAR -->
+  <div class="categories-bar">
+    <div class="categories-inner" id="catBar">
+      <span class="cat-pill active" data-cat="Todos" onclick="filterCatBar(this,'Todos')">
+        <span class="cat-dot" style="background:#60B8F5"></span>Todos
+      </span>
+      <span class="cat-pill" data-cat="Saneamento" onclick="filterCatBar(this,'Saneamento')">
+        <span class="cat-dot" style="background:#0E6FD8"></span>Saneamento
+      </span>
+      <span class="cat-pill" data-cat="Infraestrutura" onclick="filterCatBar(this,'Infraestrutura')">
+        <span class="cat-dot" style="background:#4FC3F7"></span>Infraestrutura
+      </span>
+      <span class="cat-pill" data-cat="Meio Ambiente" onclick="filterCatBar(this,'Meio Ambiente')">
+        <span class="cat-dot" style="background:#4ADE80"></span>Meio Ambiente
+      </span>
+      <span class="cat-pill" data-cat="Inovação Urbana" onclick="filterCatBar(this,'Inovação Urbana')">
+        <span class="cat-dot" style="background:#A78BFA"></span>Inovação Urbana
+      </span>
+      <span class="cat-pill" data-cat="Responsabilidade Social" onclick="filterCatBar(this,'Responsabilidade Social')">
+        <span class="cat-dot" style="background:#F97316"></span>Responsabilidade Social
+      </span>
+      <span class="cat-pill" data-cat="Sustentabilidade" onclick="filterCatBar(this,'Sustentabilidade')">
+        <span class="cat-dot" style="background:#34D399"></span>Sustentabilidade
+      </span>
+      <span class="cat-pill" data-cat="Obras e Operações" onclick="filterCatBar(this,'Obras e Operações')">
+        <span class="cat-dot" style="background:#94A3B8"></span>Obras e Operações
+      </span>
+      <span class="cat-pill" data-cat="Bastidores" onclick="filterCatBar(this,'Bastidores')">
+        <span class="cat-dot" style="background:#F472B6"></span>Bastidores
+      </span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-wrapper" id="artigos">
+    <div class="content-grid">
+      <main>
+
+        <!-- Featured Grid -->
+        <div class="section-header">
+          <h2 class="section-title syne">Artigos em <span>Destaque</span></h2>
+          <span class="section-link" onclick="filterCatBar(null,'Todos')">
+            Ver todos
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+
+        <div class="articles-grid" id="featuredGrid"></div>
+
+        <!-- Most Read -->
+        <div class="section-header">
+          <h2 class="section-title syne">Mais Lidos</h2>
+          <span class="section-link" onclick="filterCatBar(null,'Todos')">
+            Ver todos
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+
+        <div class="articles-list" id="mostReadList"></div>
+
+        <!-- Recent -->
+        <div class="section-header">
+          <h2 class="section-title syne">Publicações <span>Recentes</span></h2>
+        </div>
+
+        <div class="articles-grid" id="recentGrid"></div>
+
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <!-- Categories Widget -->
+        <div class="sidebar-widget">
+          <div class="widget-header"><div class="widget-title">Explorar Categorias</div></div>
+          <div class="widget-body">
+            <ul class="cat-list" id="sidebarCatList"></ul>
+          </div>
+        </div>
+
+        <!-- Popular Posts Widget -->
+        <div class="sidebar-widget">
+          <div class="widget-header"><div class="widget-title">Mais Acessados</div></div>
+          <div class="widget-body">
+            <ul class="popular-list" id="popularList"></ul>
+          </div>
+        </div>
+
+        <!-- Tags Widget -->
+        <div class="sidebar-widget">
+          <div class="widget-header"><div class="widget-title">Temas em Alta</div></div>
+          <div class="widget-body">
+            <div class="tags-cloud">
+              <span class="tag-pill" onclick="showCategory('Saneamento')">Saneamento básico</span>
+              <span class="tag-pill" onclick="showCategory('Obras e Operações')">Obras urbanas</span>
+              <span class="tag-pill" onclick="showCategory('Saneamento')">Água tratada</span>
+              <span class="tag-pill" onclick="showCategory('Inovação Urbana')">Smart City</span>
+              <span class="tag-pill" onclick="showCategory('Infraestrutura')">Drenagem</span>
+              <span class="tag-pill" onclick="showCategory('Sustentabilidade')">Sustentabilidade</span>
+              <span class="tag-pill" onclick="showCategory('Saneamento')">Esgotamento</span>
+              <span class="tag-pill" onclick="showCategory('Infraestrutura')">Manutenção</span>
+              <span class="tag-pill" onclick="showCategory('Meio Ambiente')">Infraestrutura verde</span>
+              <span class="tag-pill" onclick="showCategory('Inovação Urbana')">Tecnologia urbana</span>
+              <span class="tag-pill" onclick="showCategory('Responsabilidade Social')">Comunidades</span>
+              <span class="tag-pill" onclick="showCategory('Sustentabilidade')">Qualidade de vida</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- About Widget -->
+        <div class="sidebar-widget">
+          <div class="widget-header"><div class="widget-title">Sobre a Norbrasil</div></div>
+          <div class="widget-body">
+            <p style="font-size:13.5px;color:var(--nb-muted);line-height:1.7;margin-bottom:16px;">
+              Desde 1972, a Norbrasil atua no desenvolvimento de infraestrutura urbana, saneamento e serviços que transformam cidades e melhoram a qualidade de vida da população.
+            </p>
+            <button class="btn-accent" style="width:100%;border-radius:10px;padding:10px;font-size:13.5px;" onclick="showPage('about')">
+              Conheça nossa história
+            </button>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- ABOUT BANNER -->
+  <section class="about-banner">
+    <div class="banner-grid">
+      <div>
+        <div class="banner-eyebrow">Nossa Missão</div>
+        <h2 class="banner-title">
+          A Norbrasil não cuida<br>
+          apenas de infraestrutura.<br>
+          Ela cuida da <em>cidade</em>,<br>
+          das <em>pessoas</em> e do <em>futuro</em>.
+        </h2>
+        <p class="banner-text">
+          Cada obra concluída, cada sistema de saneamento operando com eficiência, cada rua que drena corretamente — é mais do que prestação de serviço. É compromisso com o desenvolvimento urbano, com a saúde da população e com as próximas gerações.
+        </p>
+        <div class="banner-numbers">
+          <div>
+            <div class="banner-num-value">+50</div>
+            <div class="banner-num-label">Anos de experiência</div>
+          </div>
+          <div>
+            <div class="banner-num-value">200+</div>
+            <div class="banner-num-label">Projetos entregues</div>
+          </div>
+          <div>
+            <div class="banner-num-value">50k+</div>
+            <div class="banner-num-label">Pessoas impactadas</div>
+          </div>
+        </div>
+      </div>
+      <div class="banner-cta-side">
+        <div class="banner-cta-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="banner-cta-text">Conteúdo estratégico<br>que informa e inspira</div>
+        <div class="banner-cta-sub">Novos artigos sobre o setor que mantém a cidade viva</div>
+        <button class="btn-accent" style="width:100%;border-radius:10px;padding:12px;" onclick="showPage('about')">
+          Conheça a Norbrasil
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL STRIP -->
+  <div class="social-strip">
+    <div class="social-inner">
+      <p class="social-text">
+        <strong>Acompanhe a Norbrasil nas redes.</strong> Conteúdo sobre infraestrutura, saneamento e desenvolvimento urbano.
+      </p>
+      <div class="social-icons">
+        <a href="#" class="social-btn">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="rgba(255,255,255,0.7)"/></svg>
+        </a>
+        <a href="#" class="social-btn">
+          <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" class="social-btn">
+          <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#071B3E"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-home -->
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PAGE: ARTICLE                                         -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="page-article">
+  <div class="article-page-hero">
+    <div class="container">
+      <div class="article-back" onclick="goBack()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Voltar
+      </div>
+      <div class="article-header">
+        <div class="article-cat-badge" id="artCatBadge"></div>
+        <h1 class="article-page-title" id="artTitle"></h1>
+        <div class="article-page-meta">
+          <span id="artDate"></span>
+          <span>·</span>
+          <span id="artReadTime"></span>
+          <span>·</span>
+          <span>Equipe Norbrasil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-body-wrap">
+    <article class="article-content">
+      <p class="article-lead" id="artLead"></p>
+      <div class="article-body" id="artBody"></div>
+      <div class="article-cta">
+        <div class="article-cta-title">Gostou deste conteúdo?</div>
+        <p>Explore mais artigos sobre infraestrutura, saneamento e desenvolvimento urbano no Blog Norbrasil.</p>
+        <button class="btn-accent" onclick="showPage('home')">Ver mais artigos</button>
+      </div>
+    </article>
+
+    <aside class="article-sidebar">
+      <div class="sidebar-widget">
+        <div class="widget-header"><div class="widget-title">Artigos Relacionados</div></div>
+        <div class="widget-body" style="display:flex;flex-direction:column;gap:16px;" id="relatedList"></div>
+      </div>
+      <div class="sidebar-widget">
+        <div class="widget-header"><div class="widget-title">Sobre a Norbrasil</div></div>
+        <div class="widget-body">
+          <p style="font-size:13.5px;color:var(--nb-muted);line-height:1.7;margin-bottom:16px;">
+            Desde 1972 cuidando da infraestrutura que mantém as cidades funcionando.
+          </p>
+          <button class="btn-accent" style="width:100%;border-radius:10px;padding:10px;font-size:13px;" onclick="showPage('about')">
+            Nossa história
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div><!-- /page-article -->
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PAGE: ABOUT                                           -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="page-about">
+  <div class="about-page-hero">
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="article-back" onclick="showPage('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Voltar ao Blog
+      </div>
+      <div class="hero-eyebrow" style="margin-bottom:16px;">Conheça a empresa</div>
+      <h1 class="hero-title" style="max-width:700px;">
+        Mais de <em>50 anos</em> cuidando<br>das cidades brasileiras
+      </h1>
+      <p class="hero-desc" style="max-width:580px;">
+        Fundada em 1972, a Norbrasil é referência nacional em saneamento básico, infraestrutura urbana e serviços ambientais. Conheça nossa história, nossos valores e o impacto do nosso trabalho.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-body">
+
+    <!-- Numbers -->
+    <div class="about-numbers">
+      <div class="about-num-card">
+        <div class="about-num-value">1972</div>
+        <div class="about-num-label">Ano de fundação</div>
+      </div>
+      <div class="about-num-card">
+        <div class="about-num-value">+50</div>
+        <div class="about-num-label">Anos de operação</div>
+      </div>
+      <div class="about-num-card">
+        <div class="about-num-value">200+</div>
+        <div class="about-num-label">Projetos entregues</div>
+      </div>
+      <div class="about-num-card">
+        <div class="about-num-value">50k+</div>
+        <div class="about-num-label">Pessoas impactadas</div>
+      </div>
+    </div>
+
+    <div class="about-divider"></div>
+
+    <!-- História -->
+    <div class="about-section">
+      <div class="about-section-title">Nossa história</div>
+      <div class="about-section-subtitle">De 1972 até hoje — uma trajetória de compromisso com as cidades</div>
+      <p>
+        A Norbrasil nasceu em 1972 com uma missão clara: trazer ao mercado brasileiro serviços de alta performance na área de saneamento básico. Desde o início, a empresa se posicionou não apenas como prestadora de serviços, mas como parceira estratégica dos municípios e concessionárias na manutenção da infraestrutura urbana.
+      </p>
+      <p>
+        Ao longo de mais de cinco décadas, a Norbrasil consolidou sua presença no setor com foco em eficiência operacional, inovação tecnológica e compromisso ambiental. A empresa possui sede em São Paulo e opera com filiais em diversas regiões do país, levando sua expertise a diferentes contextos urbanos e geográficos.
+      </p>
+      <p>
+        Ao longo dos anos, a empresa investiu continuamente na modernização de equipamentos, no treinamento técnico das equipes, na segurança operacional e na evolução tecnológica do setor — sempre com o olhar voltado para o impacto positivo nas cidades e na qualidade de vida da população.
+      </p>
+
+      <div class="about-highlight-box">
+        <div class="about-highlight-box-title">Nossa razão de existir</div>
+        <p>
+          "A Norbrasil não cuida apenas da infraestrutura — ela ajuda a cuidar da cidade, das pessoas e do futuro. Cada operação, cada projeto e cada solução que entregamos é parte de um compromisso maior com o desenvolvimento sustentável das cidades brasileiras."
+        </p>
+      </div>
+    </div>
+
+    <div class="about-divider"></div>
+
+    <!-- Serviços -->
+    <div class="about-section">
+      <div class="about-section-title">Nossos serviços</div>
+      <div class="about-section-subtitle">Soluções especializadas para a infraestrutura urbana</div>
+      <p>
+        A Norbrasil atua em diferentes frentes ligadas à infraestrutura e ao saneamento urbano. Nossa atuação cobre desde operações de alta complexidade técnica até serviços ambientais especializados, sempre com foco em segurança, eficiência e responsabilidade.
+      </p>
+      <div class="about-services-grid">
+        <div class="about-service-card">
+          <div class="about-service-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </div>
+          <div class="about-service-name">Saneamento Básico</div>
+          <div class="about-service-desc">Gestão e manutenção de sistemas de saneamento urbano com eficiência e segurança operacional.</div>
+        </div>
+        <div class="about-service-card">
+          <div class="about-service-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a1.994 1.994 0 0 1-1.414-.586m0 0L11 14h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2v4l.586-.586z"/></svg>
+          </div>
+          <div class="about-service-name">Hidrojateamento</div>
+          <div class="about-service-desc">Limpeza e desobstrução de redes de esgoto e tubulações com tecnologia de alta pressão.</div>
+        </div>
+        <div class="about-service-card">
+          <div class="about-service-icon">
+            <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.87V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8.87a1 1 0 0 1 1.447-.9L9 10l3-8 3 8z"/></svg>
+          </div>
+          <div class="about-service-name">Teleinspeção</div>
+          <div class="about-service-desc">Inspeção televisiva interna de redes e tubulações para diagnóstico preciso e planejamento de manutenção.</div>
+        </div>
+        <div class="about-service-card">
+          <div class="about-service-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </div>
+          <div class="about-service-name">Limpeza de Galerias</div>
+          <div class="about-service-desc">Limpeza e manutenção de galerias pluviais e bocas de lobo para garantir o escoamento adequado das águas.</div>
+        </div>
+        <div class="about-service-card">
+          <div class="about-service-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="about-service-name">Geoprocessamento</div>
+          <div class="about-service-desc">Cadastro técnico e geoprocessamento de redes para gestão inteligente e planejamento de infraestrutura.</div>
+        </div>
+        <div class="about-service-card">
+          <div class="about-service-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="about-service-name">Serviços Ambientais</div>
+          <div class="about-service-desc">Soluções ambientais especializadas, transporte de água potável e apoio operacional urbano sustentável.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-divider"></div>
+
+    <!-- Inovação -->
+    <div class="about-section">
+      <div class="about-section-title">Inovação tecnológica</div>
+      <div class="about-section-subtitle">O Caminhão Combinado Master Reciclador</div>
+      <p>
+        Um dos grandes diferenciais da Norbrasil é o investimento em tecnologia e equipamentos de ponta. A empresa desenvolveu e opera o <strong>Caminhão Combinado Master Reciclador</strong>, uma solução inovadora que representa um avanço significativo nas operações de limpeza e saneamento.
+      </p>
+      <p>
+        Esse sistema reutiliza a água proveniente do processo de sucção durante as operações, criando um ciclo eficiente que beneficia tanto a operação quanto o meio ambiente.
+      </p>
+      <div class="about-highlight-box">
+        <div class="about-highlight-box-title">Caminhão Combinado Master Reciclador</div>
+        <p>
+          A tecnologia permite reduzir significativamente o consumo de água tratada nas operações, diminuir o impacto ambiental das atividades, aumentar a eficiência operacional e fortalecer as práticas sustentáveis da empresa — tornando a Norbrasil referência em inovação no setor de saneamento.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-divider"></div>
+
+    <!-- Sustentabilidade -->
+    <div class="about-section">
+      <div class="about-section-title">Sustentabilidade e valores</div>
+      <div class="about-section-subtitle">Compromisso com o presente e com o futuro</div>
+      <p>
+        A Norbrasil busca posicionar sua atuação como referência em desenvolvimento sustentável. A empresa acredita que saneamento e infraestrutura de qualidade são pilares fundamentais da sustentabilidade urbana — e que o trabalho bem feito hoje constrói as cidades de amanhã.
+      </p>
+      <p>
+        Nossos compromissos incluem responsabilidade ambiental em todas as operações, eficiência urbana e redução de desperdícios, inovação operacional contínua e impacto positivo nas comunidades onde atuamos.
+      </p>
+    </div>
+
+  </div>
+</div><!-- /page-about -->
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PAGE: CATEGORY                                        -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="page-category">
+  <div class="cat-page-header">
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="article-back" onclick="showPage('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Voltar ao Blog
+      </div>
+      <div class="cat-page-title" id="catPageTitle"></div>
+      <div class="cat-page-desc" id="catPageDesc"></div>
+    </div>
+  </div>
+  <div class="cat-page-body">
+    <div class="cat-articles-grid" id="catArticlesGrid"></div>
+    <div id="catEmptyState" class="empty-state hidden">
+      <div class="empty-state-icon">📂</div>
+      <div class="empty-state-title">Nenhum artigo encontrado</div>
+      <div class="empty-state-text">Ainda não há artigos publicados nesta categoria. Em breve novos conteúdos serão adicionados.</div>
+    </div>
+  </div>
+</div><!-- /page-category -->
+
+<!-- ══ FOOTER (sempre visível) ════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="nav-logo" style="cursor:pointer;" onclick="showPage('home')">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 8c0 4 4 8 7 12 3-4 7-8 7-12 0-3-3-6-7-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="white"/></svg>
+        </div>
+        <div class="logo-text">Norbrasil<span>Blog Institucional</span></div>
+      </div>
+      <p class="footer-brand-text">
+        Conteúdo estratégico sobre saneamento, infraestrutura urbana, sustentabilidade e o trabalho que transforma cidades e melhora a qualidade de vida das pessoas.
+      </p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.25);">Saneamento · Infraestrutura · Desenvolvimento Urbano</p>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Conteúdo</div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('home');setTimeout(()=>document.getElementById('artigos').scrollIntoView({behavior:'smooth'}),100)">Todos os artigos</a></li>
+        <li><a onclick="showCategory('Saneamento')">Saneamento</a></li>
+        <li><a onclick="showCategory('Infraestrutura')">Infraestrutura</a></li>
+        <li><a onclick="showCategory('Meio Ambiente')">Meio Ambiente</a></li>
+        <li><a onclick="showCategory('Inovação Urbana')">Inovação Urbana</a></li>
+        <li><a onclick="showCategory('Sustentabilidade')">Sustentabilidade</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Empresa</div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('about')">Sobre a Norbrasil</a></li>
+        <li><a onclick="showPage('about');setTimeout(()=>document.querySelector('.about-services-grid').scrollIntoView({behavior:'smooth'}),300)">Nossos serviços</a></li>
+        <li><a onclick="showPage('about');setTimeout(()=>document.querySelector('.about-highlight-box').scrollIntoView({behavior:'smooth'}),300)">Inovação</a></li>
+        <li><a onclick="showCategory('Responsabilidade Social')">Responsabilidade social</a></li>
+        <li><a href="https://norbrasil.com.br" target="_blank">Site oficial</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Blog</div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('home');setTimeout(()=>document.getElementById('artigos').scrollIntoView({behavior:'smooth'}),100)">Artigos recentes</a></li>
+        <li><a onclick="showCategory('Bastidores')">Bastidores</a></li>
+        <li><a onclick="showCategory('Obras e Operações')">Obras e Operações</a></li>
+        <li><a onclick="showCategory('Responsabilidade Social')">Responsabilidade Social</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 <span>Norbrasil</span> · Todos os direitos reservados</span>
+    <div class="footer-legal">
+      <a>Política de Privacidade</a>
+      <a>Termos de Uso</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ JAVASCRIPT ══════════════════════════════════════════ -->
+<script>
+// ── DATA ─────────────────────────────────────────────────
+const ARTICLES = [
+  {
+    id: 0,
+    title: "O trabalho invisível que mantém a cidade funcionando todos os dias",
+    category: "Infraestrutura",
+    catClass: "cat-infra",
+    date: "19 de Janeiro, 2026",
+    readTime: "8 min de leitura",
+    featured: true,
+    excerpt: "Por trás de cada torneira aberta, cada rua pavimentada e cada sistema de drenagem que evita alagamentos, existe uma equipe trabalhando 24 horas. Este é o relato de como a infraestrutura urbana opera em silêncio para garantir qualidade de vida.",
+    lead: "Existe um exército invisível de profissionais que trabalha todos os dias para que você possa abrir a torneira, tomar banho, usar o vaso sanitário e não ver a rua alagar na primeira chuva forte. A maioria das pessoas nunca vai conhecer esse trabalho. E talvez seja exatamente por isso que ele funciona tão bem quando funciona — e que vira notícia quando falha.",
+    body: `<h2>O que é infraestrutura urbana, afinal?</h2><p>Infraestrutura urbana é o conjunto de sistemas que permitem que uma cidade funcione: abastecimento de água, esgotamento sanitário, drenagem de águas pluviais, pavimentação, iluminação pública, coleta de resíduos. São sistemas interdependentes, invisíveis no dia a dia, mas absolutamente essenciais.</p><p>Quando tudo funciona, ninguém percebe. Quando algo falha — uma rede entupida, um bueiro transbordando, uma rua que afunda — a cidade sente imediatamente. É nesse momento que o trabalho invisível fica evidente.</p><h2>O papel do saneamento nesse sistema</h2><p>O saneamento básico é um dos pilares mais críticos da infraestrutura urbana. Ele engloba quatro eixos principais:</p><ul><li>Abastecimento de água potável</li><li>Esgotamento sanitário</li><li>Manejo de resíduos sólidos</li><li>Drenagem e manejo de águas pluviais</li></ul><p>Cada um desses eixos exige manutenção contínua, monitoramento especializado e intervenções técnicas frequentes. Uma rede de esgoto que não é limpa regularmente entope. Uma galeria pluvial que acumula sedimentos transborda na primeira chuva.</p><div class="article-quote">Infraestrutura não é um produto. É um processo contínuo. Manutenção não é custo — é investimento em funcionamento.</div><h2>Como a Norbrasil atua nesse cenário</h2><p>A Norbrasil trabalha exatamente nessa fronteira entre o invisível e o essencial. Nossas equipes operam em redes de esgoto, galerias pluviais, bocas de lobo, caixas de inspeção e sistemas de drenagem — garantindo que esses sistemas continuem funcionando mesmo quando ninguém está olhando.</p><p>Utilizamos equipamentos de última geração, incluindo o <strong>Caminhão Combinado Master Reciclador</strong>, que reutiliza a água do processo de sucção, reduzindo o consumo de água tratada e o impacto ambiental das operações.</p><div class="article-highlight"><div class="article-highlight-title">Diferencial Norbrasil</div><p>O Caminhão Combinado Master Reciclador é um exemplo concreto de como inovação tecnológica e responsabilidade ambiental podem andar juntas. Ao reciclar a água usada nas operações, a Norbrasil reduz impacto e aumenta eficiência — simultaneamente.</p></div><h2>Por que isso importa para você</h2><p>Saneamento adequado reduz doenças de veiculação hídrica, aumenta a expectativa de vida, valoriza imóveis, melhora o ambiente urbano e contribui para a dignidade das pessoas. Uma cidade bem saneada é uma cidade mais saudável, mais segura e mais justa.</p><p>Na próxima vez que você abrir a torneira ou ver uma rua que drena bem depois da chuva, lembre-se: existe uma equipe que tornou isso possível.</p>`
+  },
+  {
+    id: 1,
+    title: "Saneamento básico em 2026: onde estamos e o que ainda precisa avançar",
+    category: "Saneamento",
+    catClass: "cat-saneamento",
+    date: "15 de Janeiro, 2026",
+    readTime: "7 min de leitura",
+    featured: true,
+    excerpt: "Um panorama honesto sobre os avanços e os desafios do saneamento no Brasil — e como empresas comprometidas fazem a diferença no dia a dia da população.",
+    lead: "O Brasil avançou no saneamento básico nas últimas décadas, mas ainda carrega um déficit expressivo. Entender onde estamos é o primeiro passo para construir o caminho até onde precisamos chegar.",
+    body: `<h2>O cenário atual</h2><p>Apesar dos avanços legislativos — como o novo Marco Legal do Saneamento — o Brasil ainda enfrenta desafios significativos na universalização dos serviços de água e esgoto. Dados do setor mostram que milhões de brasileiros ainda não têm acesso a saneamento adequado.</p><p>Esse déficit tem consequências diretas na saúde pública, no meio ambiente e na qualidade de vida das populações mais vulneráveis. Doenças de veiculação hídrica, contaminação de corpos d'água e alagamentos recorrentes são sintomas de um sistema que ainda precisa de atenção e investimento.</p><h2>O que avançou</h2><ul><li>Ampliação da cobertura de água tratada nas capitais</li><li>Novos marcos regulatórios que estimulam investimentos</li><li>Crescimento de tecnologias para monitoramento e gestão de redes</li><li>Maior consciência sobre a relação entre saneamento e saúde pública</li><li>Expansão de parcerias público-privadas no setor</li></ul><div class="article-quote">Saneamento não é apenas infraestrutura. É saúde pública, é dignidade, é qualidade de vida.</div><h2>O que ainda precisa avançar</h2><p>A universalização do esgotamento sanitário segue como o maior desafio. Regiões periféricas das grandes cidades e municípios de menor porte ainda convivem com a ausência ou precariedade dos serviços.</p><p>Além disso, a manutenção das redes existentes é tão importante quanto a expansão. Redes antigas e sem manutenção adequada perdem eficiência, geram perdas e aumentam riscos à população.</p><div class="article-highlight"><div class="article-highlight-title">O papel das empresas especializadas</div><p>Empresas como a Norbrasil desempenham um papel fundamental nesse contexto. A atuação técnica especializada em manutenção, desobstrução, teleinspeção e gestão operacional das redes existentes é essencial para garantir que o sistema funcione — e que os investimentos em expansão não sejam desperdiçados por falta de manutenção.</p></div>`
+  },
+  {
+    id: 2,
+    title: "Por que infraestrutura verde é essencial para o futuro das cidades?",
+    category: "Meio Ambiente",
+    catClass: "cat-meio",
+    date: "10 de Janeiro, 2026",
+    readTime: "6 min de leitura",
+    featured: true,
+    excerpt: "As cidades mais modernas do mundo estão integrando sustentabilidade à infraestrutura urbana. Entenda como esse movimento chega ao Brasil e por que ele é inevitável.",
+    lead: "A cidade do futuro não é apenas mais tecnológica — ela é mais verde, mais resiliente e mais humana. A infraestrutura verde não é tendência: é necessidade urgente.",
+    body: `<h2>O que é infraestrutura verde?</h2><p>Infraestrutura verde é o conjunto de soluções que utilizam elementos naturais — vegetação, solo, água — para cumprir funções que tradicionalmente eram exercidas por estruturas de concreto e aço. Jardins de chuva, telhados verdes, pavimentos permeáveis e parques lineares são exemplos de como a natureza pode trabalhar junto com a engenharia.</p><p>No contexto urbano, essas soluções ajudam a gerenciar as águas pluviais, reduzir as ilhas de calor, melhorar a qualidade do ar e criar ambientes mais agradáveis para as pessoas.</p><h2>Por que isso importa agora</h2><p>As mudanças climáticas estão tornando os eventos extremos — chuvas intensas, secas prolongadas, ondas de calor — mais frequentes e severos. As cidades, que concentram grande parte da população mundial, são especialmente vulneráveis.</p><ul><li>Chuvas intensas sobrecarregam sistemas de drenagem convencionais</li><li>Superfícies impermeáveis aceleram o escoamento e aumentam enchentes</li><li>Ilhas de calor elevam temperaturas nas áreas urbanas</li><li>A qualidade da água é afetada pelo escoamento superficial poluído</li></ul><div class="article-quote">A infraestrutura que construímos hoje vai determinar a resiliência das cidades nas próximas décadas.</div><h2>A conexão com o saneamento</h2><p>A gestão das águas pluviais é um ponto de conexão fundamental entre infraestrutura verde e saneamento urbano. Sistemas bem projetados que combinam galerias convencionais com soluções naturais de infiltração e retenção são mais eficientes, mais baratos de manter e mais resilientes a eventos extremos.</p><div class="article-highlight"><div class="article-highlight-title">Comprometimento da Norbrasil</div><p>A Norbrasil entende que o futuro do saneamento passa pela integração com soluções sustentáveis. Nosso compromisso com responsabilidade ambiental orienta cada operação — desde o uso do Caminhão Combinado Master Reciclador até a adoção de práticas que minimizam o impacto ambiental das intervenções nas redes urbanas.</p></div>`
+  },
+  {
+    id: 3,
+    title: "BIM, drones e IA: as tecnologias que estão reinventando as obras urbanas",
+    category: "Inovação Urbana",
+    catClass: "cat-inov",
+    date: "08 de Janeiro, 2026",
+    readTime: "5 min de leitura",
+    featured: false,
+    excerpt: "A transformação digital chegou à infraestrutura. Saiba como novas ferramentas estão tornando as obras mais eficientes, seguras e precisas — e o que isso significa para as cidades.",
+    lead: "A engenharia e a infraestrutura urbana estão passando por uma das maiores transformações de sua história. Ferramentas digitais que pareciam distantes da realidade do canteiro de obras agora são parte do cotidiano das equipes mais avançadas do setor.",
+    body: `<h2>BIM: modelagem que antecipa problemas</h2><p>O Building Information Modeling (BIM) é muito mais do que um software de desenho. É uma metodologia que cria um modelo digital completo de uma obra ou infraestrutura, integrando informações geométricas, técnicas e de tempo em um único ambiente.</p><p>Para obras de infraestrutura urbana, o BIM permite identificar conflitos entre redes subterrâneas antes da escavação, simular fases construtivas e antecipar gargalos, gerenciar manutenção ao longo de todo o ciclo de vida e melhorar a comunicação entre todas as partes envolvidas no projeto.</p><h2>Drones na inspeção e monitoramento</h2><p>Os drones estão transformando a forma como inspecionamos e monitoramos obras e infraestruturas. Com câmeras de alta resolução e sensores especializados, eles permitem acesso a áreas de difícil alcance, documentação visual detalhada e periódica, detecção de anomalias em pavimentos e estruturas, e monitoramento de obras em andamento.</p><div class="article-quote">Tecnologia não substitui a expertise humana — ela amplifica a capacidade dos profissionais de entregar resultados melhores.</div><h2>Inteligência Artificial na gestão de redes</h2><p>Algoritmos de IA já estão sendo usados para prever onde e quando ocorrerão falhas em redes de água e esgoto, otimizar rotas e escalas de equipes de manutenção, analisar dados de teleinspeção e identificar anomalias, e apoiar decisões sobre priorização de intervenções.</p><div class="article-highlight"><div class="article-highlight-title">Inovação na Norbrasil</div><p>A Norbrasil investe continuamente em tecnologia e modernização operacional. O uso do Caminhão Combinado Master Reciclador é um exemplo concreto dessa visão: tecnologia aplicada para resolver problemas reais com mais eficiência e menos impacto ambiental.</p></div>`
+  },
+  {
+    id: 4,
+    title: "Pessoas por trás da operação: os profissionais que fazem a cidade funcionar",
+    category: "Responsabilidade Social",
+    catClass: "cat-social",
+    date: "05 de Janeiro, 2026",
+    readTime: "9 min de leitura",
+    featured: false,
+    excerpt: "Uma homenagem aos profissionais que trabalham nos bastidores, mantendo o funcionamento urbano com dedicação e competência todos os dias — muitas vezes sem o reconhecimento que merecem.",
+    lead: "Toda cidade tem seus heróis silenciosos. São os profissionais de campo, os técnicos especializados, as equipes de manutenção que trabalham em horários que a maioria das pessoas dorme — para garantir que, quando todos acordarem, a cidade esteja funcionando.",
+    body: `<h2>O trabalho que a cidade não vê</h2><p>Uma operação de desobstrução de rede começa às 23h, quando o tráfego diminui. Uma equipe de hidrolavagem chega antes do amanhecer para limpar bocas de lobo antes que a chuva prevista para o final da tarde chegue. Um técnico de teleinspeção passa horas analisando imagens de redes subterrâneas para diagnosticar onde está o problema antes que ele vire emergência.</p><p>Esses profissionais raramente aparecem nas notícias. Mas são eles que tornam possível a cidade que conhecemos.</p><h2>Especialização técnica que faz diferença</h2><p>Trabalhar com saneamento e infraestrutura urbana exige uma combinação de habilidades técnicas, raciocínio prático e responsabilidade com o coletivo. Cada intervenção em uma rede de esgoto ou galeria pluvial tem consequências diretas na vida de dezenas, centenas ou milhares de pessoas.</p><ul><li>Operadores de equipamentos especializados como hidrolavadoras e caminhões sugadores</li><li>Técnicos de teleinspeção que interpretam imagens de câmeras em redes subterrâneas</li><li>Profissionais de geoprocessamento que mapeiam e documentam infraestruturas</li><li>Coordenadores de obra que garantem segurança e eficiência nas operações</li></ul><div class="article-quote">A qualidade de uma cidade começa pela qualidade das pessoas que cuidam dela.</div><h2>Valorização e treinamento</h2><p>A Norbrasil entende que o principal ativo da empresa são as pessoas. Investir em treinamento técnico, em segurança operacional e em qualidade de vida dos colaboradores não é apenas uma responsabilidade social — é uma estratégia de negócio. Equipes bem treinadas e motivadas entregam serviços melhores.</p><div class="article-highlight"><div class="article-highlight-title">Nosso compromisso com as pessoas</div><p>A Norbrasil investe continuamente no desenvolvimento das equipes — porque acreditamos que o cuidado com as pessoas que cuidam da cidade é tão importante quanto qualquer equipamento ou tecnologia que utilizamos.</p></div>`
+  },
+  {
+    id: 5,
+    title: "Como reduzir perdas na distribuição de água: estratégias que fazem a diferença",
+    category: "Sustentabilidade",
+    catClass: "cat-sust",
+    date: "28 de Dezembro, 2025",
+    readTime: "6 min de leitura",
+    featured: false,
+    excerpt: "O combate às perdas no sistema hídrico é uma das fronteiras mais importantes da gestão urbana sustentável. Entenda as abordagens mais eficazes — e por que isso é urgente.",
+    lead: "O Brasil perde volumes expressivos de água tratada antes de ela chegar às torneiras. Em um país que enfrenta pressões crescentes sobre seus recursos hídricos, reduzir essas perdas é uma das ações mais estratégicas que uma cidade pode tomar.",
+    body: `<h2>O problema das perdas</h2><p>As perdas nos sistemas de distribuição de água ocorrem por dois tipos principais: perdas reais (vazamentos físicos na rede) e perdas aparentes (erros de medição, fraudes, ligações clandestinas). Em muitos sistemas brasileiros, o índice de perdas supera 30% — o que significa que mais de um terço da água tratada não chega ao consumidor final.</p><p>O impacto é duplo: econômico, porque a água tratada tem custo; e ambiental, porque a captação, o tratamento e a distribuição de água consomem energia e recursos naturais.</p><h2>Estratégias de redução</h2><ul><li>Controle de pressão nas redes — pressões elevadas aceleram o surgimento de vazamentos</li><li>Setorização das redes para facilitar o monitoramento e a detecção de perdas</li><li>Uso de tecnologias acústicas para detecção de vazamentos sem escavação</li><li>Substituição de trechos de rede com alta incidência de falhas</li><li>Modernização de sistemas de medição e leitura</li></ul><div class="article-quote">Cada litro de água que deixa de ser perdido é um litro que não precisou ser captado, tratado e distribuído novamente.</div><h2>A importância da manutenção preventiva</h2><p>A manutenção preventiva é muito mais eficiente e econômica do que a manutenção corretiva. Identificar e corrigir problemas antes que eles se tornem rupturas evita desperdício de água, danos à via pública, interrupções no abastecimento e custos de emergência.</p><div class="article-highlight"><div class="article-highlight-title">Tecnologia a favor da sustentabilidade</div><p>O Caminhão Combinado Master Reciclador da Norbrasil é um exemplo concreto de como tecnologia pode reduzir o consumo de recursos nas operações de saneamento. Ao reciclar a água usada na sucção, a empresa economiza água tratada em cada operação — um gesto que, multiplicado por centenas de operações, faz uma diferença real.</p></div>`
+  },
+  {
+    id: 6,
+    title: "O que acontece com a água depois que ela sai da sua torneira?",
+    category: "Saneamento",
+    catClass: "cat-saneamento",
+    date: "20 de Dezembro, 2025",
+    readTime: "5 min de leitura",
+    featured: false,
+    excerpt: "Você abre a torneira, usa a água e ela vai embora pelo ralo. Mas o que acontece depois? A resposta revela um sistema complexo — e absolutamente essencial para a saúde da cidade.",
+    lead: "Poucos processos urbanos são tão fundamentais e tão desconhecidos pela população quanto o ciclo da água nas cidades. O que acontece entre o momento em que você usa a água e o momento em que ela volta ao ambiente é uma história de engenharia, tecnologia e responsabilidade coletiva.",
+    body: `<h2>Do uso ao ralo: o início do ciclo</h2><p>Quando você usa água em casa — para banho, cozinha, vaso sanitário — essa água misturada com resíduos segue pelas tubulações domésticas até a rede coletora de esgoto. A partir daí, começa uma jornada que pode percorrer quilômetros antes de chegar ao destino final.</p><h2>A rede coletora</h2><p>A rede coletora de esgoto é um sistema de tubulações subterrâneas que conduz o esgoto das residências, comércios e indústrias até interceptores de maior diâmetro, que por sua vez levam o efluente até a Estação de Tratamento de Esgoto (ETE).</p><ul><li>Redes coletoras secundárias (menores, nos bairros)</li><li>Redes coletoras primárias (maiores, nos eixos viários)</li><li>Interceptores e emissários (transportam até a ETE)</li><li>Estações elevatórias (onde a gravidade não é suficiente)</li></ul><p>Toda essa estrutura precisa de manutenção regular. Resíduos acumulados, raízes de árvores que invadem as tubulações, sedimentos e gordura são os principais inimigos de uma rede eficiente.</p><div class="article-quote">Uma rede de esgoto bem mantida é invisível. Uma rede abandonada vira problema público.</div><h2>O papel da desobstrução e limpeza</h2><p>A limpeza e desobstrução das redes de esgoto é uma das atividades mais críticas do saneamento urbano. Quando a rede entope, o esgoto reflui para dentro das casas ou extravasada para a via pública — um problema de saúde pública grave.</p><p>Técnicas como o hidrojateamento (uso de água em alta pressão para limpar as tubulações) e a aspiração mecanizada são os principais recursos utilizados pelas equipes especializadas da Norbrasil.</p><div class="article-highlight"><div class="article-highlight-title">Norbrasil no coração da cidade</div><p>A Norbrasil atua diretamente nesse ciclo — limpando, desobstruindo, inspecionando e mantendo as redes que garantem que o esgoto chegue ao destino certo. Sem esse trabalho, o ciclo da água nas cidades se rompe — e as consequências são sentidas por todos.</p></div>`
+  },
+  {
+    id: 7,
+    title: "Sensores inteligentes e a revolução silenciosa na manutenção urbana",
+    category: "Inovação Urbana",
+    catClass: "cat-inov",
+    date: "15 de Dezembro, 2025",
+    readTime: "8 min de leitura",
+    featured: false,
+    excerpt: "Câmeras, sensores de pressão e algoritmos de análise estão transformando a gestão das redes urbanas. Descubra como a tecnologia está antecipando falhas antes que elas aconteçam.",
+    lead: "Imagine saber que uma tubulação vai falhar antes que ela falhe. Que uma galeria vai saturar antes da chuva. Que um problema em uma rede de esgoto pode ser resolvido antes de se tornar uma emergência. Essa não é mais ficção científica — é a realidade da gestão inteligente de infraestrutura urbana.",
+    body: `<h2>O que são sensores inteligentes na infraestrutura?</h2><p>Sensores inteligentes são dispositivos eletrônicos instalados em pontos estratégicos das redes urbanas — tubulações de água e esgoto, galerias pluviais, bocas de lobo, estruturas de drenagem — que coletam dados em tempo real e os transmitem para sistemas centrais de análise.</p><p>Esses dados incluem informações sobre pressão e vazão, nível de água em galerias e reservatórios, detecção de gases (como metano e sulfeto de hidrogênio em redes de esgoto), temperatura e vibração em estruturas.</p><h2>Teleinspeção: os olhos dentro das redes</h2><p>A teleinspeção é uma das tecnologias mais importantes para a manutenção de redes subterrâneas. Câmeras acopladas a robôs percorrem o interior das tubulações, transmitindo imagens em alta resolução que permitem identificar rachaduras e infiltrações, raízes invadindo as tubulações, depósitos de gordura e sedimentos, deformações estruturais e conexões irregulares.</p><div class="article-quote">Ver o interior de uma rede de esgoto sem precisar escavar é uma das maiores revoluções do saneamento moderno.</div><h2>Análise de dados e manutenção preditiva</h2><p>A verdadeira revolução não está apenas na coleta de dados — está na análise. Algoritmos de machine learning conseguem identificar padrões em grandes volumes de dados operacionais e prever onde e quando uma falha tem maior probabilidade de ocorrer.</p><div class="article-highlight"><div class="article-highlight-title">Norbrasil e a teleinspeção</div><p>A Norbrasil oferece serviços especializados de teleinspeção como parte de seu portfólio de soluções para gestão de redes urbanas. Combinando câmeras de alta resolução com a expertise técnica das equipes, entregamos diagnósticos precisos que permitem planejamento eficiente da manutenção.</p></div>`
+  },
+  {
+    id: 8,
+    title: "Histórias reais: quando a infraestrutura transforma comunidades",
+    category: "Responsabilidade Social",
+    catClass: "cat-social",
+    date: "10 de Dezembro, 2025",
+    readTime: "9 min de leitura",
+    featured: false,
+    excerpt: "O impacto de um sistema de saneamento eficiente vai muito além da infraestrutura. Ele muda a vida das pessoas — e estas são algumas das histórias que provam isso.",
+    lead: "Por trás de cada quilômetro de rede saneada, de cada galeria desobstruída, de cada sistema que volta a funcionar, há histórias de comunidades que recuperaram dignidade, saúde e qualidade de vida. É sobre isso que se trata o saneamento quando feito da forma certa.",
+    body: `<h2>Saneamento como direito humano</h2><p>A ONU reconhece o acesso à água potável e ao saneamento básico como direito humano fundamental. No Brasil, esse direito ainda não é realidade para todos — mas cada avanço no sistema representa vidas transformadas.</p><p>As comunidades mais afetadas pela falta de saneamento são também as mais vulneráveis: população de baixa renda, regiões periféricas, áreas de ocupação irregular. Levar infraestrutura de qualidade até essas áreas é um ato de justiça social.</p><h2>O impacto na saúde pública</h2><p>A relação entre saneamento inadequado e doenças é direta e documentada. Cólera, diarreia, hepatite A, leptospirose, dengue — todas essas doenças têm conexão com a ausência ou precariedade do saneamento. Quando um sistema é corrigido e passa a funcionar adequadamente, a incidência dessas doenças cai.</p><ul><li>Redução de internações por doenças de veiculação hídrica</li><li>Menor mortalidade infantil associada a doenças diarreicas</li><li>Menos casos de leptospirose em áreas com drenagem melhorada</li><li>Melhora na frequência escolar quando crianças ficam menos doentes</li></ul><div class="article-quote">Saneamento é saúde. Saúde é educação. Educação é futuro. Tudo começa com a infraestrutura básica.</div><h2>Valorização do espaço urbano</h2><p>Além do impacto na saúde, o saneamento adequado transforma o espaço urbano. Ruas que antes alagavam passam a drenar. Córregos que carregavam esgoto passam a ser recuperados. A cidade se torna mais limpa, mais habitável, mais digna.</p><div class="article-highlight"><div class="article-highlight-title">O propósito da Norbrasil</div><p>Cada operação realizada pela Norbrasil carrega um propósito maior: contribuir para cidades melhores e mais justas. Quando limpamos uma galeria que estava entupida ou desobstruímos uma rede que impedia o escoamento, estamos na prática construindo uma cidade mais digna para todos.</p></div>`
+  },
+  {
+    id: 9,
+    title: "Bastidores de uma grande obra urbana: como planejamos e executamos com qualidade",
+    category: "Obras e Operações",
+    catClass: "cat-obras",
+    date: "05 de Dezembro, 2025",
+    readTime: "7 min de leitura",
+    featured: false,
+    excerpt: "Uma obra urbana de qualidade não começa com a primeira escavação. Ela começa muito antes — no planejamento, no diagnóstico, na mobilização das equipes. Veja como funciona por dentro.",
+    lead: "Uma operação de grande porte em infraestrutura urbana envolve centenas de variáveis, dezenas de profissionais e uma coordenação que precisa funcionar com precisão. Do planejamento à entrega, cada etapa tem sua importância.",
+    body: `<h2>A importância do diagnóstico</h2><p>Antes de qualquer intervenção, é necessário entender profundamente o problema. Um diagnóstico bem feito pode determinar a diferença entre uma solução eficiente e um retrabalho dispendioso.</p><p>Ferramentas como a teleinspeção, o geoprocessamento e o cadastro técnico de redes são fundamentais nessa etapa. Elas permitem identificar com precisão a extensão e a natureza do problema antes de qualquer intervenção física.</p><h2>Planejamento e mobilização</h2><p>Com o diagnóstico em mãos, começa o planejamento operacional: definição dos equipamentos necessários, cronograma de execução, plano de sinalização e segurança viária, comunicação com a população afetada e coordenação com órgãos públicos e concessionárias.</p><ul><li>Levantamento de todos os interferentes (outras redes, estruturas, obstáculos)</li><li>Definição do método executivo mais adequado</li><li>Planejamento de contingência para imprevistos</li><li>Briefing completo com toda a equipe envolvida</li></ul><div class="article-quote">Uma obra mal planejada custa duas vezes — na execução e na correção.</div><h2>Execução com segurança e qualidade</h2><p>A execução é o momento em que o planejamento é colocado à prova. Equipes treinadas, equipamentos calibrados, protocolos de segurança rigorosos e comunicação constante são os elementos que definem a qualidade de uma operação.</p><p>Na Norbrasil, cada operação segue protocolos desenvolvidos ao longo de décadas de experiência. A segurança dos profissionais e da população ao redor é inegociável.</p><div class="article-highlight"><div class="article-highlight-title">Força operacional da Norbrasil</div><p>Com mais de 50 anos de experiência, a Norbrasil desenvolveu metodologias operacionais que combinam eficiência, segurança e qualidade. Cada grande obra é planejada com o mesmo rigor técnico e o mesmo compromisso com o resultado final.</p></div>`
+  },
+  {
+    id: 10,
+    title: "Reuso de água e gestão inteligente de recursos hídricos urbanos",
+    category: "Sustentabilidade",
+    catClass: "cat-sust",
+    date: "01 de Dezembro, 2025",
+    readTime: "6 min de leitura",
+    featured: false,
+    excerpt: "O reuso de água deixou de ser uma opção e se tornou uma estratégia essencial para cidades que querem ser mais resilientes e sustentáveis. Entenda como esse conceito funciona na prática.",
+    lead: "A água é o recurso mais precioso que temos. E também um dos mais desperdiçados. Em um cenário de mudanças climáticas e crescimento urbano, o reuso inteligente de água é uma das estratégias mais importantes para garantir a resiliência das cidades.",
+    body: `<h2>O conceito de economia circular na água</h2><p>A economia circular aplicada à gestão hídrica propõe que a água seja tratada como um recurso de valor — que pode ser reutilizado, recuperado e reintegrado ao ciclo urbano, em vez de simplesmente descartado.</p><p>O esgoto tratado, por exemplo, pode ser reutilizado na irrigação de parques e jardins, na lavagem de veículos e vias públicas, em processos industriais que não exigem água potável, e na recarga de aquíferos e corpos d'água.</p><h2>Os benefícios do reuso</h2><ul><li>Redução da demanda por água potável para usos que não a exigem</li><li>Menor pressão sobre mananciais e sistemas de captação</li><li>Economia de energia nos processos de captação e tratamento</li><li>Maior resiliência hídrica das cidades em períodos de seca</li></ul><div class="article-quote">A água que julgamos descartada muitas vezes é exatamente a que precisamos para outras finalidades.</div><h2>Inovação em operações de saneamento</h2><p>O princípio do reuso pode ser aplicado também dentro das próprias operações de saneamento. A Norbrasil é um exemplo concreto disso com o Caminhão Combinado Master Reciclador — tecnologia que reutiliza a água gerada no processo de sucção das redes, fechando um ciclo que antes desperdiçava um recurso valioso.</p><div class="article-highlight"><div class="article-highlight-title">Inovação que economiza recursos</div><p>O Caminhão Combinado Master Reciclador da Norbrasil não é apenas um equipamento — é um símbolo de como a inovação pode alinhar eficiência operacional e responsabilidade ambiental. Ao reciclar a água nas operações, reduzimos o consumo de água tratada em cada trabalho realizado.</p></div>`
+  }
+];
+
+// ── CATEGORY INFO ─────────────────────────────────────────
+const CAT_INFO = {
+  "Saneamento": { color: "#0E6FD8", desc: "Artigos sobre saneamento básico, redes de esgoto, água potável e gestão dos sistemas que garantem saúde e qualidade de vida nas cidades." },
+  "Infraestrutura": { color: "#4FC3F7", desc: "Conteúdo sobre obras, manutenção, drenagem urbana e os sistemas que mantêm a cidade funcionando todos os dias." },
+  "Meio Ambiente": { color: "#4ADE80", desc: "Artigos sobre impacto ambiental, preservação e o equilíbrio entre desenvolvimento urbano e natureza." },
+  "Inovação Urbana": { color: "#A78BFA", desc: "Tecnologias, metodologias e soluções inovadoras que estão transformando a gestão das cidades." },
+  "Responsabilidade Social": { color: "#F97316", desc: "Histórias sobre o impacto humano e social do trabalho de infraestrutura e saneamento nas comunidades." },
+  "Sustentabilidade": { color: "#34D399", desc: "Práticas, estratégias e compromissos voltados para a construção de cidades mais sustentáveis e resilientes." },
+  "Obras e Operações": { color: "#94A3B8", desc: "Bastidores e detalhes técnicos das operações de infraestrutura urbana — como planejamos e executamos." },
+  "Bastidores": { color: "#F472B6", desc: "Os bastidores da Norbrasil — pessoas, equipes, processos e o dia a dia de quem cuida da cidade." }
+};
+
+// ── NAVIGATION ─────────────────────────────────────────────
+let currentPage = 'home';
+let previousPage = 'home';
+
+function showPage(page) {
+  previousPage = currentPage;
+  currentPage = page;
+
+  document.getElementById('page-home').style.display = 'none';
+  document.getElementById('page-article').style.display = 'none';
+  document.getElementById('page-about').style.display = 'none';
+  document.getElementById('page-category').style.display = 'none';
+
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+  if (page === 'home') {
+    document.getElementById('page-home').style.display = 'block';
+    document.getElementById('nav-home').classList.add('active');
+  } else if (page === 'article') {
+    document.getElementById('page-article').style.display = 'block';
+  } else if (page === 'about') {
+    document.getElementById('page-about').style.display = 'block';
+    document.getElementById('nav-about').classList.add('active');
+  } else if (page === 'category') {
+    document.getElementById('page-category').style.display = 'block';
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  if (previousPage === 'category') {
+    showPage('category');
+  } else {
+    showPage('home');
+  }
+}
+
+// ── ARTICLE OPEN ───────────────────────────────────────────
+function openArticle(id) {
+  const art = ARTICLES.find(a => a.id === id);
+  if (!art) return;
+
+  document.getElementById('artCatBadge').textContent = art.category;
+  document.getElementById('artTitle').textContent = art.title;
+  document.getElementById('artDate').textContent = art.date;
+  document.getElementById('artReadTime').textContent = art.readTime;
+  document.getElementById('artLead').textContent = art.lead;
+  document.getElementById('artBody').innerHTML = art.body;
+
+  // Related articles (same category, exclude current)
+  const related = ARTICLES.filter(a => a.id !== id && a.category === art.category).slice(0, 3);
+  const otherRelated = ARTICLES.filter(a => a.id !== id && a.category !== art.category).slice(0, 3 - related.length);
+  const allRelated = [...related, ...otherRelated].slice(0, 4);
+
+  document.getElementById('relatedList').innerHTML = allRelated.map(r => `
+    <div class="related-card" onclick="openArticle(${r.id})">
+      <div class="related-cat">${r.category}</div>
+      <div class="related-title">${r.title}</div>
+      <div class="related-meta">${r.date} · ${r.readTime}</div>
+    </div>
+  `).join('');
+
+  showPage('article');
+}
+
+// ── CATEGORY PAGE ──────────────────────────────────────────
+function showCategory(cat) {
+  const info = CAT_INFO[cat] || { color: '#0E6FD8', desc: `Artigos sobre ${cat}.` };
+  document.getElementById('catPageTitle').textContent = cat;
+  document.getElementById('catPageDesc').textContent = info.desc;
+
+  const filtered = ARTICLES.filter(a => a.category === cat);
+  const grid = document.getElementById('catArticlesGrid');
+  const empty = document.getElementById('catEmptyState');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+  } else {
+    empty.classList.add('hidden');
+    grid.innerHTML = filtered.map(art => buildCard(art, false)).join('');
+  }
+
+  showPage('category');
+}
+
+// ── CATEGORY BAR FILTER (on home) ─────────────────────────
+function filterCatBar(el, cat) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  if (el) el.classList.add('active');
+
+  if (cat !== 'Todos') {
+    showCategory(cat);
+    return;
+  }
+
+  renderHome();
+  document.getElementById('artigos').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── BUILD CARD HTML ────────────────────────────────────────
+function buildCard(art, featured) {
+  const svgPatterns = [
+    `<svg width="100%" height="180" viewBox="0 0 240 180"><rect x="10" y="80" width="20" height="100" fill="white" rx="2"/><rect x="40" y="50" width="20" height="130" fill="white" rx="2"/><rect x="70" y="65" width="20" height="115" fill="white" rx="2"/><rect x="100" y="30" width="20" height="150" fill="white" rx="2"/><rect x="130" y="55" width="20" height="125" fill="white" rx="2"/><rect x="160" y="40" width="20" height="140" fill="white" rx="2"/><rect x="190" y="70" width="20" height="110" fill="white" rx="2"/></svg>`,
+    `<svg width="100%" height="180" viewBox="0 0 240 180"><circle cx="80" cy="90" r="60" stroke="white" stroke-width="0.5" fill="none"/><circle cx="80" cy="90" r="40" stroke="white" stroke-width="0.5" fill="none"/><circle cx="80" cy="90" r="20" fill="white" opacity="0.3"/><line x1="80" y1="30" x2="80" y2="150" stroke="white" stroke-width="0.4"/><line x1="20" y1="90" x2="140" y2="90" stroke="white" stroke-width="0.4"/></svg>`,
+    `<svg width="100%" height="180" viewBox="0 0 240 180"><path d="M20 90 Q60 40 100 80 Q140 120 180 60 Q210 20 230 50" stroke="white" stroke-width="1.5" fill="none"/><circle cx="100" cy="80" r="6" fill="white"/><circle cx="180" cy="60" r="6" fill="white"/></svg>`,
+    `<svg width="100%" height="180" viewBox="0 0 240 180"><polygon points="120,20 200,140 40,140" stroke="white" fill="none" stroke-width="0.8"/><polygon points="120,50 175,130 65,130" stroke="white" fill="none" stroke-width="0.8" opacity="0.6"/><circle cx="120" cy="20" r="5" fill="white"/></svg>`,
+    `<svg width="100%" height="180" viewBox="0 0 240 180"><rect x="20" y="100" width="40" height="80" stroke="white" fill="none" stroke-width="0.8"/><rect x="70" y="70" width="40" height="110" stroke="white" fill="none" stroke-width="0.8"/><rect x="120" y="50" width="40" height="130" stroke="white" fill="none" stroke-width="0.8"/><rect x="170" y="80" width="40" height="100" stroke="white" fill="none" stroke-width="0.8"/></svg>`,
+  ];
+  const gradients = [
+    'linear-gradient(135deg,#0A3D62 0%,#1565C0 100%)',
+    'linear-gradient(135deg,#064E3B 0%,#0F766E 100%)',
+    'linear-gradient(135deg,#312E81 0%,#4C1D95 100%)',
+    'linear-gradient(135deg,#7C2D12 0%,#C2410C 100%)',
+    'linear-gradient(135deg,#065F46 0%,#047857 100%)',
+    'linear-gradient(135deg,#071B3E 0%,#0E3A7D 100%)',
+  ];
+  const gradient = gradients[art.id % gradients.length];
+  const svg = svgPatterns[art.id % svgPatterns.length];
+
+  if (featured) {
+    return `
+      <div class="article-card featured" onclick="openArticle(${art.id})">
+        <div class="card-img" style="background:${gradient};">
+          <div class="card-img-inner">${svg}</div>
+          <span class="card-category ${art.catClass}">${art.category}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span>${art.date}</span>
+            <span class="card-meta-sep">·</span>
+            <span>${art.readTime}</span>
+          </div>
+          <h3 class="card-title">${art.title}</h3>
+          <p class="card-excerpt">${art.excerpt}</p>
+          <div class="card-footer">
+            <div class="author-chip">
+              <div class="author-avatar">NB</div>
+              <span class="author-name">Equipe Norbrasil</span>
+            </div>
+            <span class="read-more">Ler artigo <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  return `
+    <div class="article-card" onclick="openArticle(${art.id})">
+      <div class="card-img" style="background:${gradient};">
+        <div class="card-img-inner">${svg}</div>
+        <span class="card-category ${art.catClass}">${art.category}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span>${art.date}</span>
+          <span class="card-meta-sep">·</span>
+          <span>${art.readTime}</span>
+        </div>
+        <h3 class="card-title">${art.title}</h3>
+        <p class="card-excerpt">${art.excerpt}</p>
+        <div class="card-footer">
+          <div class="author-chip">
+            <div class="author-avatar">NB</div>
+            <span class="author-name">Equipe Norbrasil</span>
+          </div>
+          <span class="read-more">Ler artigo <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── RENDER HOME ────────────────────────────────────────────
+function renderHome() {
+  const featured = ARTICLES.filter(a => a.featured).slice(0, 3);
+  const mostRead = ARTICLES.slice(0, 5);
+  const recent = ARTICLES.filter(a => !a.featured).slice(0, 3);
+
+  // Featured grid: first is big, rest normal
+  document.getElementById('featuredGrid').innerHTML =
+    buildCard(featured[0], true) +
+    featured.slice(1).map(a => buildCard(a, false)).join('');
+
+  // Most read list
+  document.getElementById('mostReadList').innerHTML = mostRead.map((art, i) => `
+    <div class="article-list-item" onclick="openArticle(${art.id})">
+      <div class="list-item-num">0${i + 1}</div>
+      <div class="list-item-body">
+        <div class="list-item-cat">${art.category}</div>
+        <div class="list-item-title">${art.title}</div>
+        <div class="list-item-meta">
+          <span>${art.date}</span>
+          <span>·</span>
+          <span>${art.readTime}</span>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // Recent grid
+  document.getElementById('recentGrid').innerHTML = recent.map(a => buildCard(a, false)).join('');
+
+  // Sidebar categories
+  const cats = Object.keys(CAT_INFO);
+  document.getElementById('sidebarCatList').innerHTML = cats.map(cat => {
+    const count = ARTICLES.filter(a => a.category === cat).length;
+    const info = CAT_INFO[cat];
+    return `
+      <li>
+        <a onclick="showCategory('${cat}')">
+          <span class="cat-list-label">
+            <span class="cat-list-dot" style="background:${info.color}"></span>${cat}
+          </span>
+          <span>${count}</span>
+        </a>
+      </li>`;
+  }).join('');
+
+  // Popular list
+  document.getElementById('popularList').innerHTML = ARTICLES.slice(0, 4).map((art, i) => `
+    <li class="popular-item" onclick="openArticle(${art.id})">
+      <span class="popular-num">0${i + 1}</span>
+      <div class="popular-content">
+        <div class="popular-title">${art.title}</div>
+        <div class="popular-meta"><span>${art.category}</span><span>·</span><span>${art.readTime}</span></div>
+      </div>
+    </li>`).join('');
+}
+
+// ── READING BAR ────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('readingBar').style.width = (scrollTop / scrollHeight * 100) + '%';
+});
+
+// ── SEARCH ─────────────────────────────────────────────────
+const CAT_COLORS = {
+  "Saneamento": "#0E6FD8",
+  "Infraestrutura": "#4FC3F7",
+  "Meio Ambiente": "#4ADE80",
+  "Inovação Urbana": "#A78BFA",
+  "Responsabilidade Social": "#F97316",
+  "Sustentabilidade": "#34D399",
+  "Obras e Operações": "#94A3B8",
+  "Bastidores": "#F472B6"
+};
+
+const CAT_EMOJI = {
+  "Saneamento": "💧",
+  "Infraestrutura": "🏗️",
+  "Meio Ambiente": "🌿",
+  "Inovação Urbana": "⚡",
+  "Responsabilidade Social": "🤝",
+  "Sustentabilidade": "♻️",
+  "Obras e Operações": "🔧",
+  "Bastidores": "🎬"
+};
+
+let searchActiveIndex = -1;
+let searchCurrentResults = [];
+
+function openSearch() {
+  document.getElementById('searchOverlay').classList.add('open');
+  setTimeout(() => {
+    const inp = document.getElementById('searchInput');
+    inp.value = '';
+    inp.focus();
+    renderSearchDefault();
+  }, 60);
+}
+
+function closeSearch() {
+  document.getElementById('searchOverlay').classList.remove('open');
+  searchActiveIndex = -1;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('searchOverlay')) closeSearch();
+}
+
+function handleSearchKey(e) {
+  const items = document.querySelectorAll('.search-result-item[data-id]');
+  if (!items.length) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    searchActiveIndex = Math.min(searchActiveIndex + 1, items.length - 1);
+    updateActiveItem(items);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    searchActiveIndex = Math.max(searchActiveIndex - 1, 0);
+    updateActiveItem(items);
+  } else if (e.key === 'Enter') {
+    if (searchActiveIndex >= 0 && items[searchActiveIndex]) {
+      const id = parseInt(items[searchActiveIndex].dataset.id);
+      closeSearch();
+      openArticle(id);
+    }
+  } else if (e.key === 'Escape') {
+    closeSearch();
+  }
+}
+
+function updateActiveItem(items) {
+  items.forEach((el, i) => {
+    el.classList.toggle('active', i === searchActiveIndex);
+    if (i === searchActiveIndex) el.scrollIntoView({ block: 'nearest' });
+  });
+}
+
+function highlight(text, query) {
+  if (!query.trim()) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
+}
+
+function renderSearchResult(art, query) {
+  const color = CAT_COLORS[art.category] || '#0E6FD8';
+  const emoji = CAT_EMOJI[art.category] || '📄';
+  const titleHL = highlight(art.title, query);
+  return `
+    <div class="search-result-item" data-id="${art.id}"
+      onclick="closeSearch();openArticle(${art.id})"
+      onmouseenter="searchActiveIndex=${searchCurrentResults.indexOf(art)};updateActiveItem(document.querySelectorAll('.search-result-item[data-id]'))">
+      <div class="search-result-icon" style="background:${color}22;border:1px solid ${color}33;">
+        <span>${emoji}</span>
+      </div>
+      <div class="search-result-body">
+        <div class="search-result-title">${titleHL}</div>
+        <div class="search-result-meta">
+          <span class="search-result-cat">${art.category}</span>
+          <span>${art.date}</span>
+          <span>·</span>
+          <span>${art.readTime}</span>
+        </div>
+      </div>
+      <div class="search-result-arrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </div>`;
+}
+
+function renderSearchDefault() {
+  searchActiveIndex = -1;
+  searchCurrentResults = ARTICLES;
+
+  const cats = Object.keys(CAT_COLORS);
+  const catChips = cats.map(cat => {
+    const color = CAT_COLORS[cat];
+    return `<span class="search-cat-chip" onclick="closeSearch();showCategory('${cat}')">
+      <span class="search-cat-chip-dot" style="background:${color}"></span>${cat}
+    </span>`;
+  }).join('');
+
+  const recentResults = ARTICLES.map(a => renderSearchResult(a, '')).join('');
+
+  document.getElementById('searchCount').textContent = `${ARTICLES.length} artigos disponíveis`;
+  document.getElementById('searchResults').innerHTML = `
+    <div class="search-group-label">Explorar por categoria</div>
+    <div class="search-cat-chips">${catChips}</div>
+    <div class="search-group-label" style="margin-top:8px;">Todos os artigos</div>
+    ${recentResults}
+  `;
+}
+
+function runSearch(query) {
+  searchActiveIndex = -1;
+  const q = query.trim().toLowerCase();
+
+  if (!q) {
+    renderSearchDefault();
+    return;
+  }
+
+  const results = ARTICLES.filter(a =>
+    a.title.toLowerCase().includes(q) ||
+    a.category.toLowerCase().includes(q) ||
+    a.excerpt.toLowerCase().includes(q) ||
+    a.readTime.toLowerCase().includes(q)
+  );
+
+  searchCurrentResults = results;
+
+  document.getElementById('searchCount').textContent =
+    results.length === 0 ? 'Nenhum resultado' :
+    results.length === 1 ? '1 resultado encontrado' :
+    `${results.length} resultados encontrados`;
+
+  if (results.length === 0) {
+    document.getElementById('searchResults').innerHTML = `
+      <div class="search-no-results">
+        <strong>Nenhum resultado para "${query}"</strong>
+        Tente palavras como: saneamento, infraestrutura, sustentabilidade, inovação...
+      </div>`;
+    return;
+  }
+
+  document.getElementById('searchResults').innerHTML =
+    `<div class="search-group-label">Resultados</div>` +
+    results.map(a => renderSearchResult(a, query)).join('');
+}
+
+// Atalho de teclado global: Ctrl+K ou Command+K
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    openSearch();
+  }
+  if (e.key === 'Escape') closeSearch();
+});
+
+// ── INIT ───────────────────────────────────────────────────
+renderHome();
+showPage('home');
+</script>
+</body>
+</html>
